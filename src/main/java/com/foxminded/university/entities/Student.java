@@ -1,14 +1,15 @@
 package com.foxminded.university.entities;
 
 import java.sql.Date;
+import java.util.Objects;
 
 public class Student {
+    private long id;
     private String firstname;
     private String lastname;
     private int studyYear;
     private Date dateOfBirth;
     private String gender;
-    private long id;
 
     public Student() {
     }
@@ -76,5 +77,30 @@ public class Student {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Student student = (Student) o;
+        return id == student.id && studyYear == student.studyYear && firstname.equals(student.firstname) && lastname.equals(student.lastname) && dateOfBirth.equals(student.dateOfBirth) && gender.equals(student.gender);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstname, lastname, studyYear, dateOfBirth, gender);
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", studyYear=" + studyYear +
+                ", dateOfBirth=" + dateOfBirth +
+                ", gender='" + gender + '\'' +
+                '}';
     }
 }

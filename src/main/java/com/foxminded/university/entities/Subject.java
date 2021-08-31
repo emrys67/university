@@ -1,13 +1,14 @@
 package com.foxminded.university.entities;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Subject {
+    private long id;
     private String name;
     private String description;
     private Teacher supervisor;
     private List<Teacher> teachers;
-    private long id;
 
     public Subject() {
     }
@@ -65,5 +66,29 @@ public class Subject {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Subject subject = (Subject) o;
+        return id == subject.id && name.equals(subject.name) && description.equals(subject.description) && supervisor.equals(subject.supervisor) && teachers.equals(subject.teachers);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, description, supervisor, teachers);
+    }
+
+    @Override
+    public String toString() {
+        return "Subject{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", supervisor=" + supervisor +
+                ", teachers=" + teachers +
+                '}';
     }
 }

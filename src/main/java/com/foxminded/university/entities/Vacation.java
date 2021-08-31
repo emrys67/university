@@ -1,9 +1,11 @@
 package com.foxminded.university.entities;
 
+import java.util.Objects;
+
 public class Vacation {
+    private long id;
     private TimePeriod timePeriod;
     private String description;
-    private long id;
 
     public Vacation() {
     }
@@ -41,5 +43,27 @@ public class Vacation {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Vacation vacation = (Vacation) o;
+        return id == vacation.id && timePeriod.equals(vacation.timePeriod) && description.equals(vacation.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, timePeriod, description);
+    }
+
+    @Override
+    public String toString() {
+        return "Vacation{" +
+                "id=" + id +
+                ", timePeriod=" + timePeriod +
+                ", description='" + description + '\'' +
+                '}';
     }
 }

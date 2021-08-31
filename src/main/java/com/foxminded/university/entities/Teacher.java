@@ -1,15 +1,16 @@
 package com.foxminded.university.entities;
 
 import java.sql.Date;
+import java.util.Objects;
 
 public class Teacher {
+    private long id;
     private Vacation vacation;
     private TimePeriod workingHours;
     private String firstname;
     private String lastname;
     private Date dateOfBirth;
     private String gender;
-    private long id;
 
     public Teacher(Vacation vacation) {
         this.vacation = vacation;
@@ -88,5 +89,31 @@ public class Teacher {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Teacher teacher = (Teacher) o;
+        return id == teacher.id && vacation.equals(teacher.vacation) && workingHours.equals(teacher.workingHours) && firstname.equals(teacher.firstname) && lastname.equals(teacher.lastname) && dateOfBirth.equals(teacher.dateOfBirth) && gender.equals(teacher.gender);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, vacation, workingHours, firstname, lastname, dateOfBirth, gender);
+    }
+
+    @Override
+    public String toString() {
+        return "Teacher{" +
+                "id=" + id +
+                ", vacation=" + vacation +
+                ", workingHours=" + workingHours +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
+                ", gender='" + gender + '\'' +
+                '}';
     }
 }

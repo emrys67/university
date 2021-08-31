@@ -1,11 +1,12 @@
 package com.foxminded.university.entities;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Group {
+    private long id;
     private String name;
     private List<Student> students;
-    private long id;
 
     public Group(String name) {
         this.name = name;
@@ -44,5 +45,27 @@ public class Group {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Group group = (Group) o;
+        return id == group.id && name.equals(group.name) && students.equals(group.students);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, students);
+    }
+
+    @Override
+    public String toString() {
+        return "Group{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", students=" + students +
+                '}';
     }
 }
