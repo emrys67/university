@@ -11,6 +11,9 @@ public class Lecture {
     private TimePeriod timePeriod;
     private Classroom classroom;
 
+    public Lecture() {
+    }
+
     public Lecture(Subject subject) {
         this.subject = subject;
     }

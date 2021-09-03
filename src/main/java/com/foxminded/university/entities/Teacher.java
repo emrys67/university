@@ -12,6 +12,9 @@ public class Teacher {
     private Date dateOfBirth;
     private String gender;
 
+    public Teacher() {
+    }
+
     public Teacher(Vacation vacation) {
         this.vacation = vacation;
     }

@@ -9,6 +9,9 @@ public class TimePeriod {
     private Date startTime;
     private Date endTime;
 
+    public TimePeriod() {
+    }
+
     public TimePeriod(Date startTime) {
         this.startTime = startTime;
     }
