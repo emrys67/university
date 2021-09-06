@@ -99,12 +99,12 @@ public class Teacher {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Teacher teacher = (Teacher) o;
-        return id == teacher.id && vacation.equals(teacher.vacation) && workingHours.equals(teacher.workingHours) && firstname.equals(teacher.firstname) && lastname.equals(teacher.lastname) && dateOfBirth.equals(teacher.dateOfBirth) && gender.equals(teacher.gender);
+        return id == teacher.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, vacation, workingHours, firstname, lastname, dateOfBirth, gender);
+        return Objects.hash(id);
     }
 
     @Override

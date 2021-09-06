@@ -50,12 +50,12 @@ public class Vacation {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Vacation vacation = (Vacation) o;
-        return id == vacation.id && timePeriod.equals(vacation.timePeriod) && description.equals(vacation.description);
+        return id == vacation.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, timePeriod, description);
+        return Objects.hash(id);
     }
 
     @Override
