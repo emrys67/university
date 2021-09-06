@@ -73,12 +73,12 @@ public class Subject {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Subject subject = (Subject) o;
-        return id == subject.id;
+        return id == subject.id && name.equals(subject.name) && description.equals(subject.description) && supervisor.equals(subject.supervisor) && teachers.equals(subject.teachers);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(id, name, description, supervisor, teachers);
     }
 
     @Override

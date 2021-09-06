@@ -39,12 +39,12 @@ public class Classroom {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Classroom classroom = (Classroom) o;
-        return id == classroom.id;
+        return id == classroom.id && capacity == classroom.capacity;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(id, capacity);
     }
 
     @Override

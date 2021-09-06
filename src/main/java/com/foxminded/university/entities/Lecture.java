@@ -88,12 +88,12 @@ public class Lecture {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Lecture lecture = (Lecture) o;
-        return id == lecture.id;
+        return id == lecture.id && subject.equals(lecture.subject) && groups.equals(lecture.groups) && teacher.equals(lecture.teacher) && timePeriod.equals(lecture.timePeriod) && classroom.equals(lecture.classroom);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(id, subject, groups, teacher, timePeriod, classroom);
     }
 
     @Override

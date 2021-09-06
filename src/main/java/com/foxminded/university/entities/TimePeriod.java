@@ -2,24 +2,44 @@ package com.foxminded.university.entities;
 
 
 import java.sql.Date;
-import java.time.LocalTime;
 import java.util.Objects;
 
 public class TimePeriod {
     private long id;
-    private Date startDate;
-    private Date endDate;
-    private LocalTime startTime;
-    private LocalTime endTime;
+    private Date startTime;
+    private Date endTime;
 
     public TimePeriod() {
     }
 
-    public TimePeriod(long id, Date startDate, Date endDate, LocalTime startTime, LocalTime endTime) {
-        this.id = id;
-        this.startDate = startDate;
-        this.endDate = endDate;
+    public TimePeriod(Date startTime) {
         this.startTime = startTime;
+    }
+
+    public TimePeriod(Date startTime, Date endTime) {
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
+
+    public TimePeriod(Date startTime, Date endTime, long id) {
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.id = id;
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }
 
@@ -31,57 +51,23 @@ public class TimePeriod {
         this.id = id;
     }
 
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
-    }
-
-    public LocalTime getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(LocalTime startTime) {
-        this.startTime = startTime;
-    }
-
-    public LocalTime getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(LocalTime endTime) {
-        this.endTime = endTime;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TimePeriod that = (TimePeriod) o;
-        return id == that.id;
+        return id == that.id && startTime.equals(that.startTime) && endTime.equals(that.endTime);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(id, startTime, endTime);
     }
 
     @Override
     public String toString() {
         return "TimePeriod{" +
                 "id=" + id +
-                ", startDate=" + startDate +
-                ", endDate=" + endDate +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
                 '}';

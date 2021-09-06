@@ -7,9 +7,9 @@ public interface Dao<T> {
 
     List<T> getAll();
 
-    void delete(Long id);
+    boolean delete(T person);
 
-    void update(T person);
+    boolean update(T person);
 
-    void create(T person);
+    boolean create(T person);
 }
