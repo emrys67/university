@@ -1,16 +1,19 @@
 package com.foxminded.university;
 
+import com.foxminded.university.config.SpringConfig;
 import com.foxminded.university.dao.ClassroomJdbcDao;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.foxminded.university.entities.Classroom;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.stereotype.Component;
 
+@Component
 public class SpringApplication {
     public static void main(String[] args) {
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(
+        ApplicationContext context = new AnnotationConfigApplicationContext(
                 SpringConfig.class
         );
         ClassroomJdbcDao classroomJdbcDao = context.getBean(ClassroomJdbcDao.class);
-        classroomJdbcDao.prr();
-        context.close();
+        classroomJdbcDao.create(new Classroom(1));
     }
 }

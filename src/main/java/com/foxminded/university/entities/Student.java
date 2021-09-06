@@ -84,12 +84,12 @@ public class Student {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Student student = (Student) o;
-        return id == student.id && studyYear == student.studyYear && firstname.equals(student.firstname) && lastname.equals(student.lastname) && dateOfBirth.equals(student.dateOfBirth) && gender.equals(student.gender);
+        return id == student.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstname, lastname, studyYear, dateOfBirth, gender);
+        return Objects.hash(id);
     }
 
     @Override
