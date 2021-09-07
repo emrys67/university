@@ -29,6 +29,13 @@ public class TeacherJdbcDaoTest {
     }
 
     @Test
+    void getByWrongId() {
+        Assertions.assertThrows(EmptyResultDataAccessException.class, () -> {
+            teacherJdbcDao.getById((long) 20);
+        });
+    }
+
+    @Test
     void getAll() {
         int size = teacherJdbcDao.getAll().size();
         assertEquals(5, size);
@@ -55,5 +62,12 @@ public class TeacherJdbcDaoTest {
         Teacher teacher = teacherJdbcDao.getById((long) 1);
         teacherJdbcDao.create(teacher);
         assertEquals("Ilon", teacherJdbcDao.getById((long) 6).getFirstname());
+    }
+
+    @Test
+    void createWithNullObject() {
+        Assertions.assertThrows(NullPointerException.class, () -> {
+            teacherJdbcDao.create(null);
+        });
     }
 }

@@ -5,6 +5,7 @@ import com.foxminded.university.entities.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.annotation.DirtiesContext;
@@ -34,6 +35,13 @@ public class LectureJdbcDaoTest {
     @Test
     void getById() {
         assertTrue(lectureJdbcDao.getById((long) 2).getSubject().getId() == (long) 1);
+    }
+
+    @Test
+    void getByWrongId() {
+        Assertions.assertThrows(EmptyResultDataAccessException.class, () -> {
+            lectureJdbcDao.getById((long) 123);
+        });
     }
 
     @Test
@@ -74,9 +82,30 @@ public class LectureJdbcDaoTest {
     }
 
     @Test
+    void createWithNullObject() {
+        Assertions.assertThrows(NullPointerException.class, () -> {
+            subjectJdbcDao.create(null);
+        });
+    }
+
+    @Test
     void addGroup() {
         lectureJdbcDao.addGroup((long) 1, (long) 4);
         assertTrue(lectureJdbcDao.getGroupsFromLecture((long) 1).stream().anyMatch(group -> group.getId() == (long) 4));
+    }
+
+    @Test
+    void addNotExistingGroup() {
+        Assertions.assertThrows(DataIntegrityViolationException.class, () -> {
+            lectureJdbcDao.addGroup((long) 1, (long) 15);
+        });
+    }
+
+    @Test
+    void addGroupToNotExistingLecture() {
+        Assertions.assertThrows(DataIntegrityViolationException.class, () -> {
+            lectureJdbcDao.addGroup((long) 231, (long) 4);
+        });
     }
 
     @Test

@@ -32,6 +32,13 @@ public class TimePeriodJdbcDaoTest {
     }
 
     @Test
+    void getByWrongId() {
+        Assertions.assertThrows(EmptyResultDataAccessException.class, () -> {
+            timePeriodJdbcDao.getById((long) 20);
+        });
+    }
+
+    @Test
     void getAll() {
         int size = timePeriodJdbcDao.getAll().size();
         assertEquals(10, size);
@@ -58,5 +65,12 @@ public class TimePeriodJdbcDaoTest {
         TimePeriod timePeriod = timePeriodJdbcDao.getById((long) 1);
         timePeriodJdbcDao.create(timePeriod);
         assertEquals(timePeriod.getStartTime(), timePeriodJdbcDao.getById((long) 11).getStartTime());
+    }
+
+    @Test
+    void createWithNullObject() {
+        Assertions.assertThrows(NullPointerException.class, () -> {
+            timePeriodJdbcDao.create(null);
+        });
     }
 }

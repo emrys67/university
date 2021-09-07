@@ -29,6 +29,13 @@ public class ClassroomJdbcDaoTest {
     }
 
     @Test
+    void getByWrongId() {
+        Assertions.assertThrows(EmptyResultDataAccessException.class, () -> {
+            Classroom actual = classroomJdbcDao.getById((long) 15);
+        });
+    }
+
+    @Test
     void getAll() {
         int actual = classroomJdbcDao.getAll().size();
         assertEquals(5, actual);
@@ -46,7 +53,7 @@ public class ClassroomJdbcDaoTest {
     void update() {
         Classroom classroom = new Classroom(15, 2);
         classroomJdbcDao.update(classroom);
-        assertEquals(15,classroomJdbcDao.getById((long) 2).getCapacity());
+        assertEquals(15, classroomJdbcDao.getById((long) 2).getCapacity());
     }
 
     @Test
@@ -54,5 +61,12 @@ public class ClassroomJdbcDaoTest {
         Classroom classroom = new Classroom(200);
         classroomJdbcDao.create(classroom);
         assertEquals(200, classroomJdbcDao.getById((long) 6).getCapacity());
+    }
+
+    @Test
+    void createWithNullObject() {
+        Assertions.assertThrows(NullPointerException.class, () -> {
+            classroomJdbcDao.create(null);
+        });
     }
 }

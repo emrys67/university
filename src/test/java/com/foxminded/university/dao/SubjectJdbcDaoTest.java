@@ -6,6 +6,7 @@ import com.foxminded.university.entities.Teacher;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
@@ -29,6 +30,13 @@ public class SubjectJdbcDaoTest {
     void getById() {
         Subject subject = subjectJdbcDao.getById((long) 1);
         assertEquals("math", subject.getName());
+    }
+
+    @Test
+    void getByWrongId() {
+        Assertions.assertThrows(EmptyResultDataAccessException.class, () -> {
+            subjectJdbcDao.getById((long) 20);
+        });
     }
 
     @Test
@@ -62,9 +70,30 @@ public class SubjectJdbcDaoTest {
     }
 
     @Test
+    void createWithNullObject() {
+        Assertions.assertThrows(NullPointerException.class, () -> {
+            subjectJdbcDao.create(null);
+        });
+    }
+
+    @Test
     void addTeacherToSubject() {
         subjectJdbcDao.addTeacherToSubject((long) 1, (long) 3);
         assertTrue(subjectJdbcDao.getTeachersFromSubject((long) 3).stream().anyMatch(teacher -> teacher.getId() == (long) 1));
+    }
+
+    @Test
+    void addNotExistingTeacherToSubject() {
+        Assertions.assertThrows(DataIntegrityViolationException.class, () -> {
+            subjectJdbcDao.addTeacherToSubject((long) 111, (long) 3);
+        });
+    }
+
+    @Test
+    void addTeacherToNotExistingSubject() {
+        Assertions.assertThrows(DataIntegrityViolationException.class, () -> {
+            subjectJdbcDao.addTeacherToSubject((long) 1, (long) 333);
+        });
     }
 
     @Test

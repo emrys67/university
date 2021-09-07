@@ -26,6 +26,13 @@ public class VacationJdbcDaoTest {
     }
 
     @Test
+    void getByWrongId() {
+        Assertions.assertThrows(EmptyResultDataAccessException.class, () -> {
+            vacationJdbcDao.getById((long) 20);
+        });
+    }
+
+    @Test
     void getAll() {
         int size = vacationJdbcDao.getAll().size();
         assertEquals(6, size);
@@ -52,5 +59,12 @@ public class VacationJdbcDaoTest {
         Vacation vacation = vacationJdbcDao.getById((long) 1);
         vacationJdbcDao.create(vacation);
         assertEquals(vacation.getTimePeriod(), vacationJdbcDao.getById((long) 7).getTimePeriod());
+    }
+
+    @Test
+    void createWithNullObject() {
+        Assertions.assertThrows(NullPointerException.class, () -> {
+            vacationJdbcDao.create(null);
+        });
     }
 }
