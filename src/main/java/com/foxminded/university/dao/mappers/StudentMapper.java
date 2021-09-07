@@ -1,5 +1,6 @@
 package com.foxminded.university.dao.mappers;
 
+import com.foxminded.university.dao.exceptions.MapperException;
 import com.foxminded.university.entities.Student;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
@@ -15,6 +16,7 @@ public class StudentMapper implements RowMapper<Student> {
     private final static String BIRTH_DATE = "date_of_birth";
     private final static String STUDY_YEAR = "study_year";
     private final static String GENDER = "gender";
+    private final static String MAPPER_EXCEPTION = "Exception in MapperClass";
 
     public Student mapRow(ResultSet resultSet, int i) {
         try {
@@ -27,7 +29,7 @@ public class StudentMapper implements RowMapper<Student> {
             student.setGender(resultSet.getString(GENDER));
             return student;
         } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new MapperException(MAPPER_EXCEPTION, e);
         }
     }
 }

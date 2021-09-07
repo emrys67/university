@@ -2,6 +2,7 @@ package com.foxminded.university.dao.mappers;
 
 import com.foxminded.university.dao.SubjectJdbcDao;
 import com.foxminded.university.dao.TeacherJdbcDao;
+import com.foxminded.university.dao.exceptions.MapperException;
 import com.foxminded.university.entities.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
@@ -15,6 +16,7 @@ public class SubjectMapper implements RowMapper<Subject> {
     private final static String ID = "id";
     private final static String NAME = "name";
     private final static String DESCRIPTION = "description";
+    private final static String MAPPER_EXCEPTION = "Exception in MapperClass";
     private TeacherJdbcDao teacherJdbcDao;
     private SubjectJdbcDao subjectJdbcDao;
 
@@ -36,7 +38,7 @@ public class SubjectMapper implements RowMapper<Subject> {
             return subject;
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException();
+            throw new MapperException(MAPPER_EXCEPTION, e);
         }
     }
 }

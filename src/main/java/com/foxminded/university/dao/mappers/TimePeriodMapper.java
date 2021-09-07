@@ -1,5 +1,6 @@
 package com.foxminded.university.dao.mappers;
 
+import com.foxminded.university.dao.exceptions.MapperException;
 import com.foxminded.university.entities.TimePeriod;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
@@ -14,6 +15,7 @@ public class TimePeriodMapper implements RowMapper<TimePeriod> {
     private final static String END_DATE = "end_date";
     private final static String START_TIME = "start_time";
     private final static String END_TIME = "end_time";
+    private final static String MAPPER_EXCEPTION = "Exception in MapperClass";
 
     public TimePeriod mapRow(ResultSet resultSet, int i) {
         try {
@@ -25,7 +27,7 @@ public class TimePeriodMapper implements RowMapper<TimePeriod> {
             timePeriod.setEndTime(resultSet.getTime(END_TIME).toLocalTime());
             return timePeriod;
         } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new MapperException(MAPPER_EXCEPTION, e);
         }
     }
 }

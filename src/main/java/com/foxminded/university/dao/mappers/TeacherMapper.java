@@ -1,5 +1,6 @@
 package com.foxminded.university.dao.mappers;
 
+import com.foxminded.university.dao.exceptions.MapperException;
 import com.foxminded.university.dao.interfaces.TimePeriodDao;
 import com.foxminded.university.dao.interfaces.VacationDao;
 import com.foxminded.university.entities.Teacher;
@@ -19,6 +20,7 @@ public class TeacherMapper implements RowMapper<Teacher> {
     private final static String VACATION = "vacation_id";
     private final static String BIRTH_DATE = "date_of_birth";
     private final static String WORKING_HOURS = "working_hours_id";
+    private final static String MAPPER_EXCEPTION = "Exception in MapperClass";
     private TimePeriodDao timePeriodDao;
     private VacationDao vacationDao;
 
@@ -41,7 +43,7 @@ public class TeacherMapper implements RowMapper<Teacher> {
             return teacher;
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException();
+            throw new MapperException(MAPPER_EXCEPTION, e);
         }
     }
 }

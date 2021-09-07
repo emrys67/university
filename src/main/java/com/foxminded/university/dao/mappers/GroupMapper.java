@@ -1,6 +1,7 @@
 package com.foxminded.university.dao.mappers;
 
 import com.foxminded.university.dao.GroupJdbcDao;
+import com.foxminded.university.dao.exceptions.MapperException;
 import com.foxminded.university.entities.Group;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
@@ -13,6 +14,7 @@ import java.sql.SQLException;
 public class GroupMapper implements RowMapper<Group> {
     private final static String ID = "id";
     private final static String NAME = "name";
+    private final static String MAPPER_EXCEPTION = "Exception in MapperClass";
     private GroupJdbcDao groupJdbcDao;
 
     @Autowired
@@ -30,7 +32,7 @@ public class GroupMapper implements RowMapper<Group> {
             return group;
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException();
+            throw new MapperException(MAPPER_EXCEPTION, e);
         }
     }
 }
