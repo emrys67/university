@@ -5,11 +5,11 @@ import java.util.Objects;
 
 public class Student {
     private long id;
+    private int studyYear;
     private String firstname;
     private String lastname;
-    private int studyYear;
-    private Date dateOfBirth;
     private String gender;
+    private Date dateOfBirth;
 
     public Student() {
     }

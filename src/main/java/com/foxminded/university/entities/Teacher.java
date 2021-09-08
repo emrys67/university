@@ -9,8 +9,8 @@ public class Teacher {
     private TimePeriod workingHours;
     private String firstname;
     private String lastname;
-    private Date dateOfBirth;
     private String gender;
+    private Date dateOfBirth;
 
     public Teacher() {
     }
