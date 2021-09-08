@@ -3,17 +3,21 @@ package com.foxminded.university.services;
 import com.foxminded.university.dao.ClassroomJdbcDao;
 import com.foxminded.university.entities.Classroom;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Component
+@Service
 public class ClassroomService {
-    @Autowired
-    ClassroomJdbcDao classroomJdbcDao;
+    private ClassroomJdbcDao classroomJdbcDao;
 
-    public void addClassroom(int capacity) {
-        classroomJdbcDao.create(new Classroom(capacity));
+    @Autowired
+    public ClassroomService(ClassroomJdbcDao classroomJdbcDao) {
+        this.classroomJdbcDao = classroomJdbcDao;
+    }
+
+    public void addClassroom(Classroom classroom) {
+        classroomJdbcDao.create(classroom);
     }
 
     public Classroom getClassroomById(long id) {
@@ -28,8 +32,7 @@ public class ClassroomService {
         return classroomJdbcDao.getAll();
     }
 
-    public void updateClassroom(int capacity, long id) {
-        Classroom classroom = new Classroom(capacity, id);
+    public void updateClassroom(Classroom classroom) {
         classroomJdbcDao.update(classroom);
     }
 }

@@ -26,7 +26,7 @@ public class ClassroomServiceTest {
     @Test
     public void addClassroomDaoWasUsed() {
         doNothing().when(classroomJdbcDao).create(any());
-        classroomService.addClassroom(1);
+        classroomService.addClassroom(any());
         verify(classroomJdbcDao, times(1)).create(any());
     }
 
@@ -54,7 +54,7 @@ public class ClassroomServiceTest {
     @Test
     public void updateClassroomDaoWasUsed() {
         doNothing().when(classroomJdbcDao).update(any());
-        classroomService.updateClassroom(1, (long) 1);
+        classroomService.updateClassroom(any());
         verify(classroomJdbcDao, times(1)).update(any());
     }
 }

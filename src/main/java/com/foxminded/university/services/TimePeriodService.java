@@ -3,19 +3,20 @@ package com.foxminded.university.services;
 import com.foxminded.university.dao.TimePeriodJdbcDao;
 import com.foxminded.university.entities.TimePeriod;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-import java.sql.Date;
-import java.time.LocalTime;
 import java.util.List;
 
-@Component
+@Service
 public class TimePeriodService {
-    @Autowired
-    TimePeriodJdbcDao timePeriodJdbcDao;
+    private TimePeriodJdbcDao timePeriodJdbcDao;
 
-    public void addTimePeriod(Date startDate, Date endDate, LocalTime startTime, LocalTime endTime) {
-        TimePeriod timePeriod = new TimePeriod(startDate, endDate, startTime, endTime);
+    @Autowired
+    public TimePeriodService(TimePeriodJdbcDao timePeriodJdbcDao) {
+        this.timePeriodJdbcDao = timePeriodJdbcDao;
+    }
+
+    public void addTimePeriod(TimePeriod timePeriod) {
         timePeriodJdbcDao.create(timePeriod);
     }
 
@@ -31,8 +32,7 @@ public class TimePeriodService {
         return timePeriodJdbcDao.getAll();
     }
 
-    public void updateTimePeriod(long id, Date startDate, Date endDate, LocalTime startTime, LocalTime endTime) {
-        TimePeriod timePeriod = new TimePeriod(id, startDate, endDate, startTime, endTime);
+    public void updateTimePeriod(TimePeriod timePeriod) {
         timePeriodJdbcDao.update(timePeriod);
     }
 }

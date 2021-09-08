@@ -13,8 +13,7 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @ActiveProfiles("test")
 @SpringJUnitConfig(TestConfig.class)
@@ -29,9 +28,8 @@ public class VacationServiceTest {
 
     @Test
     public void addVacationDaoWasUsed() {
-        vacationService.addVacation(anyLong(), "");
+        vacationService.addVacation(any());
         verify(vacationJdbcDao, times(1)).create(any());
-        verify(timePeriodJdbcDao, times(1)).getById(any());
     }
 
     @Test
@@ -54,7 +52,7 @@ public class VacationServiceTest {
 
     @Test
     public void updateVacationDaoWasUsed() {
-        vacationService.updateVacation((long) 1, " ", (long) 1);
+        vacationService.updateVacation(any());
         verify(vacationJdbcDao, times(1)).update(any());
     }
 }

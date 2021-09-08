@@ -2,6 +2,8 @@ package com.foxminded.university.services;
 
 import com.foxminded.university.config.TestConfig;
 import com.foxminded.university.dao.*;
+import com.foxminded.university.entities.Group;
+import com.foxminded.university.entities.Lecture;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -19,24 +21,16 @@ import static org.mockito.Mockito.*;
 public class LectureServiceTest {
     @Mock
     private LectureJdbcDao lectureJdbcDao;
-    @Mock
-    private SubjectJdbcDao subjectJdbcDao;
-    @Mock
-    private TeacherJdbcDao teacherJdbcDao;
-    @Mock
-    private TimePeriodJdbcDao timePeriodJdbcDao;
-    @Mock
-    private ClassroomJdbcDao classroomJdbcDao;
     @InjectMocks
     private LectureService lectureService;
+    @Mock
+    Group group;
+    @Mock
+    Lecture lecture;
 
     @Test
     public void addLectureDaoWasUsed() {
-        lectureService.addLecture((long) 1, (long) 1, (long) 1, (long) 1);
-        verify(subjectJdbcDao, times(1)).getById(any());
-        verify(teacherJdbcDao, times(1)).getById(any());
-        verify(timePeriodJdbcDao, times(1)).getById(any());
-        verify(classroomJdbcDao, times(1)).getById(any());
+        lectureService.addLecture(any());
         verify(lectureJdbcDao, times(1)).create(any());
     }
 
@@ -60,18 +54,16 @@ public class LectureServiceTest {
 
     @Test
     public void updateLectureDaoWasUsed() {
-        lectureService.updateLecture((long) 1, (long) 1, (long) 1, (long) 1, (long) 1, true);
-        verify(subjectJdbcDao, times(1)).getById(any());
-        verify(teacherJdbcDao, times(1)).getById(any());
-        verify(timePeriodJdbcDao, times(1)).getById(any());
-        verify(classroomJdbcDao, times(1)).getById(any());
+        lectureService.updateLecture(any());
         verify(lectureJdbcDao, times(1)).update(any());
     }
 
     @Test
     public void addGroupDaoWasUsed() {
-        lectureService.addGroup((long) 1, (long) 1);
-        verify(lectureJdbcDao, times(1)).addGroup(anyLong(), anyLong());
+        when(group.getId()).thenReturn((long) 1);
+        when(lecture.getId()).thenReturn((long) 1);
+        lectureService.addGroup(lecture, group);
+        verify(lectureJdbcDao, times(1)).addGroup((long) 1, (long) 1);
     }
 
     @Test

@@ -2,23 +2,24 @@ package com.foxminded.university.services;
 
 import com.foxminded.university.dao.TimePeriodJdbcDao;
 import com.foxminded.university.dao.VacationJdbcDao;
-import com.foxminded.university.entities.TimePeriod;
 import com.foxminded.university.entities.Vacation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Component
+@Service
 public class VacationService {
-    @Autowired
-    VacationJdbcDao vacationJdbcDao;
-    @Autowired
-    TimePeriodJdbcDao timePeriodJdbcDao;
+    private VacationJdbcDao vacationJdbcDao;
+    private TimePeriodJdbcDao timePeriodJdbcDao;
 
-    public void addVacation(long timePeriodId, String description) {
-        TimePeriod timePeriod = timePeriodJdbcDao.getById(timePeriodId);
-        Vacation vacation = new Vacation(timePeriod, description);
+    @Autowired
+    public VacationService(VacationJdbcDao vacationJdbcDao, TimePeriodJdbcDao timePeriodJdbcDao) {
+        this.vacationJdbcDao = vacationJdbcDao;
+        this.timePeriodJdbcDao = timePeriodJdbcDao;
+    }
+
+    public void addVacation(Vacation vacation) {
         vacationJdbcDao.create(vacation);
     }
 
@@ -34,9 +35,7 @@ public class VacationService {
         return vacationJdbcDao.getAll();
     }
 
-    public void updateVacation(long timePeriodId, String description, long id) {
-        TimePeriod timePeriod = timePeriodJdbcDao.getById(timePeriodId);
-        Vacation vacation = new Vacation(timePeriod, description, id);
+    public void updateVacation(Vacation vacation) {
         vacationJdbcDao.update(vacation);
     }
 }

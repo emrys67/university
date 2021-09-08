@@ -20,7 +20,6 @@ public class LectureMapper implements RowMapper<Lecture> {
     private final static String TIME_PERIOD = "time_period_id";
     private final static String MAPPER_EXCEPTION = "Exception in MapperClass";
 
-    private GroupDao groupDao;
     private SubjectDao subjectDao;
     private TeacherDao teacherDao;
     private ClassroomDao classroomDao;
@@ -28,8 +27,7 @@ public class LectureMapper implements RowMapper<Lecture> {
     private LectureJdbcDao lectureJdbcDao;
 
     @Autowired
-    public LectureMapper(GroupDao groupDao, SubjectDao subjectDao, TeacherDao teacherDao, ClassroomDao classroomDao, TimePeriodDao timePeriodDao, LectureJdbcDao lectureJdbcDao) {
-        this.groupDao = groupDao;
+    public LectureMapper(SubjectDao subjectDao, TeacherDao teacherDao, ClassroomDao classroomDao, TimePeriodDao timePeriodDao, LectureJdbcDao lectureJdbcDao) {
         this.subjectDao = subjectDao;
         this.teacherDao = teacherDao;
         this.classroomDao = classroomDao;
@@ -39,15 +37,12 @@ public class LectureMapper implements RowMapper<Lecture> {
 
     public Lecture mapRow(ResultSet resultSet, int i) {
         try {
-            Lecture lecture = new Lecture();
             long id = resultSet.getLong(ID);
-            lecture.setId(id);
-            lecture.setClassroom(classroomDao.getById(resultSet.getLong(CLASSROOM)));
-            lecture.setSubject(subjectDao.getById(resultSet.getLong(SUBJECT)));
-            lecture.setTeacher(teacherDao.getById(resultSet.getLong(TEACHER)));
-            lecture.setTimePeriod(timePeriodDao.getById(resultSet.getLong(TIME_PERIOD)));
-            lecture.setGroups(lectureJdbcDao.getGroupsFromLecture(id));
-            return lecture;
+            return new Lecture().setId(id).setClassroom(classroomDao.getById(resultSet.getLong(CLASSROOM)))
+                    .setSubject(subjectDao.getById(resultSet.getLong(SUBJECT)))
+                    .setTeacher(teacherDao.getById(resultSet.getLong(TEACHER)))
+                    .setTimePeriod(timePeriodDao.getById(resultSet.getLong(TIME_PERIOD)))
+                    .setGroups(lectureJdbcDao.getGroupsFromLecture(id));
         } catch (SQLException e) {
             throw new MapperException(MAPPER_EXCEPTION, e);
         }

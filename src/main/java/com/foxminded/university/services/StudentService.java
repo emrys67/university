@@ -3,18 +3,20 @@ package com.foxminded.university.services;
 import com.foxminded.university.dao.StudentJdbcDao;
 import com.foxminded.university.entities.Student;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-import java.sql.Date;
 import java.util.List;
 
-@Component
+@Service
 public class StudentService {
-    @Autowired
-    StudentJdbcDao studentJdbcDao;
+    private StudentJdbcDao studentJdbcDao;
 
-    public void addStudent(String firstname, String lastname, String gender, int studyYear, Date dateOfBith) {
-        Student student = new Student(firstname, lastname, studyYear, dateOfBith, gender);
+    @Autowired
+    public StudentService(StudentJdbcDao studentJdbcDao) {
+        this.studentJdbcDao = studentJdbcDao;
+    }
+
+    public void addStudent(Student student) {
         studentJdbcDao.create(student);
     }
 
@@ -30,8 +32,7 @@ public class StudentService {
         return studentJdbcDao.getAll();
     }
 
-    public void updateStudent(String firstname, String lastname, String gender, int studyYear, Date dateOfBith, long id) {
-        Student student = new Student(firstname, lastname, studyYear, dateOfBith, gender, id);
+    public void updateStudent(Student student) {
         studentJdbcDao.update(student);
     }
 }

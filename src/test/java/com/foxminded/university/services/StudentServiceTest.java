@@ -10,8 +10,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
-import java.sql.Date;
-
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -27,7 +25,7 @@ public class StudentServiceTest {
 
     @Test
     public void addStudentDaoWasUsed() {
-        studentService.addStudent("", "", "", 1, new Date(1));
+        studentService.addStudent(any());
         verify(studentJdbcDao, times(1)).create(any());
     }
 
@@ -51,7 +49,7 @@ public class StudentServiceTest {
 
     @Test
     public void updateStudentDaoWasUsed() {
-        studentService.updateStudent("", "", "", 1, new Date(1), (long) 1);
+        studentService.updateStudent(any());
         verify(studentJdbcDao, times(1)).update(any());
     }
 }

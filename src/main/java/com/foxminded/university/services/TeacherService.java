@@ -1,31 +1,22 @@
 package com.foxminded.university.services;
 
 import com.foxminded.university.dao.TeacherJdbcDao;
-import com.foxminded.university.dao.TimePeriodJdbcDao;
-import com.foxminded.university.dao.VacationJdbcDao;
 import com.foxminded.university.entities.Teacher;
-import com.foxminded.university.entities.TimePeriod;
-import com.foxminded.university.entities.Vacation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-import java.sql.Date;
 import java.util.List;
 
-@Component
+@Service
 public class TeacherService {
-    @Autowired
-    TeacherJdbcDao teacherJdbcDao;
-    @Autowired
-    TimePeriodJdbcDao timePeriodJdbcDao;
-    @Autowired
-    VacationJdbcDao vacationJdbcDao;
+    private TeacherJdbcDao teacherJdbcDao;
 
-    public void addTeacher(String firstname, String lastname, String gender, Date dateOfBirth,
-                           long workingHoursId, long vacationId) {
-        Vacation vacation = vacationJdbcDao.getById(vacationId);
-        TimePeriod workingHours = timePeriodJdbcDao.getById(workingHoursId);
-        Teacher teacher = new Teacher(vacation, workingHours, firstname, lastname, dateOfBirth, gender);
+    @Autowired
+    public TeacherService(TeacherJdbcDao teacherJdbcDao) {
+        this.teacherJdbcDao = teacherJdbcDao;
+    }
+
+    public void addTeacher(Teacher teacher) {
         teacherJdbcDao.create(teacher);
     }
 
@@ -41,11 +32,7 @@ public class TeacherService {
         return teacherJdbcDao.getAll();
     }
 
-    public void updateTeacher(String firstname, String lastname, String gender, Date dateOfBirth,
-                              long workingHoursId, long vacationId, long id) {
-        Vacation vacation = vacationJdbcDao.getById(vacationId);
-        TimePeriod workingHours = timePeriodJdbcDao.getById(workingHoursId);
-        Teacher teacher = new Teacher(vacation, workingHours, firstname, lastname, dateOfBirth, gender, id);
+    public void updateTeacher(Teacher teacher) {
         teacherJdbcDao.update(teacher);
     }
 }

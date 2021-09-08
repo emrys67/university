@@ -1,20 +1,21 @@
 package com.foxminded.university.services;
 
 import com.foxminded.university.dao.GroupJdbcDao;
-import com.foxminded.university.dao.StudentJdbcDao;
 import com.foxminded.university.entities.Group;
 import com.foxminded.university.entities.Student;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Component
+@Service
 public class GroupService {
+    private GroupJdbcDao groupJdbcDao;
+
     @Autowired
-    GroupJdbcDao groupJdbcDao;
-    @Autowired
-    StudentJdbcDao studentJdbcDao;
+    public GroupService(GroupJdbcDao groupJdbcDao) {
+        this.groupJdbcDao = groupJdbcDao;
+    }
 
     public void addGroup(String name) {
         Group group = new Group(name);
@@ -33,19 +34,12 @@ public class GroupService {
         return groupJdbcDao.getAll();
     }
 
-    public void updateGroup(String name, long id, boolean changeStudents) {
-        List<Student> list;
-        if (changeStudents) {
-            list = null;
-        } else {
-            list = groupJdbcDao.getById(id).getStudents();
-        }
-        Group group = new Group(name, list, id);
+    public void updateGroup(Group group) {
         groupJdbcDao.update(group);
     }
 
-    public void addStudent(long studentId, long groupId) {
-        groupJdbcDao.addStudentToGroup(studentId, groupId);
+    public void addStudent(Student student, Group group) {
+        groupJdbcDao.addStudentToGroup(student.getId(), group.getId());
     }
 
     public List<Student> getStudentsFromGroup(long groupId) {

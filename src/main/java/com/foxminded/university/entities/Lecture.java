@@ -14,10 +14,6 @@ public class Lecture {
     public Lecture() {
     }
 
-    public Lecture(Subject subject) {
-        this.subject = subject;
-    }
-
     public Lecture(Subject subject, List<Group> groups, Teacher teacher, TimePeriod timePeriod, Classroom classroom) {
         this.subject = subject;
         this.groups = groups;
@@ -39,48 +35,58 @@ public class Lecture {
         return subject;
     }
 
-    public void setSubject(Subject subject) {
+    public Lecture setSubject(Subject subject) {
         this.subject = subject;
+        return this;
     }
 
     public List<Group> getGroups() {
         return groups;
     }
 
-    public void setGroups(List<Group> groups) {
+    public Lecture setGroups(List<Group> groups) {
         this.groups = groups;
+        return this;
     }
 
     public Teacher getTeacher() {
         return teacher;
     }
 
-    public void setTeacher(Teacher teacher) {
+    public Lecture setTeacher(Teacher teacher) {
         this.teacher = teacher;
+        return this;
     }
 
     public TimePeriod getTimePeriod() {
         return timePeriod;
     }
 
-    public void setTimePeriod(TimePeriod timePeriod) {
+    public Lecture setTimePeriod(TimePeriod timePeriod) {
         this.timePeriod = timePeriod;
+        return this;
     }
 
     public Classroom getClassroom() {
         return classroom;
     }
 
-    public void setClassroom(Classroom classroom) {
+    public Lecture setClassroom(Classroom classroom) {
         this.classroom = classroom;
+        return this;
     }
 
     public long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public Lecture setId(long id) {
         this.id = id;
+        return this;
+    }
+
+    public Lecture createLecture() {
+        return new Lecture(subject, groups, teacher, timePeriod, classroom, id);
     }
 
     @Override

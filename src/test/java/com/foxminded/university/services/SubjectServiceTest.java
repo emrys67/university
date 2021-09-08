@@ -2,7 +2,8 @@ package com.foxminded.university.services;
 
 import com.foxminded.university.config.TestConfig;
 import com.foxminded.university.dao.SubjectJdbcDao;
-import com.foxminded.university.dao.TeacherJdbcDao;
+import com.foxminded.university.entities.Subject;
+import com.foxminded.university.entities.Teacher;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -14,8 +15,8 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 @ActiveProfiles("test")
 @SpringJUnitConfig(TestConfig.class)
@@ -23,16 +24,17 @@ import static org.mockito.Mockito.verify;
 public class SubjectServiceTest {
     @Mock
     private SubjectJdbcDao subjectJdbcDao;
-    @Mock
-    private TeacherJdbcDao teacherJdbcDao;
     @InjectMocks
     private SubjectService subjectService;
+    @Mock
+    Teacher teacher;
+    @Mock
+    Subject subject;
 
     @Test
     public void addSubjectDaoWasUsed() {
-        subjectService.addSubject("", "", (long) 1);
+        subjectService.addSubject(any());
         verify(subjectJdbcDao, times(1)).create(any());
-        verify(teacherJdbcDao, times(1)).getById(any());
     }
 
     @Test
@@ -55,14 +57,16 @@ public class SubjectServiceTest {
 
     @Test
     public void updateSubjectDaoWasUsed() {
-        subjectService.updateSubject("", "", (long) 1, (long) 1, true);
+        subjectService.updateSubject(any());
         verify(subjectJdbcDao, times(1)).update(any());
     }
 
     @Test
     public void addTeacherDaoWasUsed() {
-        subjectService.addTeacher((long) 1, (long) 1);
-        verify(subjectJdbcDao, times(1)).addTeacherToSubject(anyLong(), anyLong());
+        when(teacher.getId()).thenReturn((long) 1);
+        when(subject.getId()).thenReturn((long) 1);
+        subjectService.addTeacher(teacher, subject);
+        verify(subjectJdbcDao, times(1)).addTeacherToSubject((long) 1, (long) 1);
     }
 
     @Test

@@ -10,9 +10,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
-import java.sql.Date;
-import java.time.LocalTime;
-
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -28,7 +25,7 @@ public class TimePeriodServiceTest {
 
     @Test
     public void addClassroomDaoWasUsed() {
-        timePeriodService.addTimePeriod(new Date(1), new Date(1), LocalTime.NOON, LocalTime.NOON);
+        timePeriodService.addTimePeriod(any());
         verify(timePeriodJdbcDao, times(1)).create(any());
     }
 
@@ -52,7 +49,7 @@ public class TimePeriodServiceTest {
 
     @Test
     public void updateTimePeriodDaoWasUsed() {
-        timePeriodService.updateTimePeriod((long) 1, new Date(1), new Date(1), LocalTime.NOON, LocalTime.NOON);
+        timePeriodService.updateTimePeriod(any());
         verify(timePeriodJdbcDao, times(1)).update(any());
     }
 }
