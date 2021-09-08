@@ -1,40 +1,60 @@
 package com.foxminded.university.services;
 
 import com.foxminded.university.config.TestConfig;
+import com.foxminded.university.dao.TimePeriodJdbcDao;
+import com.foxminded.university.dao.VacationJdbcDao;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
+
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
 @ActiveProfiles("test")
 @SpringJUnitConfig(TestConfig.class)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @ExtendWith(MockitoExtension.class)
 public class VacationServiceTest {
-    @Test
-    public void addVacation(){
+    @Mock
+    private VacationJdbcDao vacationJdbcDao;
+    @Mock
+    private TimePeriodJdbcDao timePeriodJdbcDao;
+    @InjectMocks
+    private VacationService vacationService;
 
+    @Test
+    public void addVacationDaoWasUsed() {
+        vacationService.addVacation(anyLong(), "");
+        verify(vacationJdbcDao, times(1)).create(any());
+        verify(timePeriodJdbcDao, times(1)).getById(any());
     }
 
     @Test
-    public void getVacationById(){
-
+    public void getVacationByIdDaoWasUsed() {
+        vacationService.getVacationById(anyLong());
+        verify(vacationJdbcDao, times(1)).getById(any());
     }
 
     @Test
-    public void deleteVacationById(){
-
+    public void deleteVacationByIdDaoWasUsed() {
+        vacationService.deleteVacationById(anyLong());
+        verify(vacationJdbcDao, times(1)).delete(any());
     }
 
     @Test
-    public void getAllVacations(){
-
+    public void getAllVacationsDaoWasUsed() {
+        vacationService.getAllVacations();
+        verify(vacationJdbcDao, times(1)).getAll();
     }
 
     @Test
-    public void updateVacation(){
-
+    public void updateVacationDaoWasUsed() {
+        vacationService.updateVacation((long) 1, " ", (long) 1);
+        verify(vacationJdbcDao, times(1)).update(any());
     }
 }

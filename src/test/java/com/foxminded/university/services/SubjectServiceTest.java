@@ -1,50 +1,73 @@
 package com.foxminded.university.services;
 
 import com.foxminded.university.config.TestConfig;
+import com.foxminded.university.dao.SubjectJdbcDao;
+import com.foxminded.university.dao.TeacherJdbcDao;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
 @ActiveProfiles("test")
 @SpringJUnitConfig(TestConfig.class)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @ExtendWith(MockitoExtension.class)
 public class SubjectServiceTest {
-    @Test
-    public void addSubject(){
+    @Mock
+    private SubjectJdbcDao subjectJdbcDao;
+    @Mock
+    private TeacherJdbcDao teacherJdbcDao;
+    @InjectMocks
+    private SubjectService subjectService;
 
+    @Test
+    public void addSubjectDaoWasUsed() {
+        subjectService.addSubject("", "", (long) 1);
+        verify(subjectJdbcDao, times(1)).create(any());
+        verify(teacherJdbcDao, times(1)).getById(any());
     }
 
     @Test
-    public void getSubjectById(){
-
+    public void getSubjectByIdDaoWasUsed() {
+        subjectService.getSubjectById((long) 1);
+        verify(subjectJdbcDao, times(1)).getById(any());
     }
 
     @Test
-    public void deleteSubjectById(){
-
+    public void deleteSubjectByIdDaoWasUsed() {
+        subjectService.deleteSubjectById((long) 1);
+        verify(subjectJdbcDao, times(1)).delete(any());
     }
 
     @Test
-    public void getAllSubjects(){
-
+    public void getAllSubjectsDaoWasUsed() {
+        subjectService.getAllSubjects();
+        verify(subjectJdbcDao, times(1)).getAll();
     }
 
     @Test
-    public void updateSubject(){
-
+    public void updateSubjectDaoWasUsed() {
+        subjectService.updateSubject("", "", (long) 1, (long) 1, true);
+        verify(subjectJdbcDao, times(1)).update(any());
     }
 
     @Test
-    public void addTeacher(){
-
+    public void addTeacherDaoWasUsed() {
+        subjectService.addTeacher((long) 1, (long) 1);
+        verify(subjectJdbcDao, times(1)).addTeacherToSubject(anyLong(), anyLong());
     }
 
     @Test
-    public void getTeachersFromSubject(){
-
+    public void getTeachersFromSubjectDaoWasUsed() {
+        subjectService.getTeachersFromSubject((long) 1);
+        verify(subjectJdbcDao, times(1)).getTeachersFromSubject(anyLong());
     }
 }
