@@ -14,15 +14,15 @@ import java.util.List;
 
 @Component
 public class LectureJdbcDao implements LectureDao {
-    private final static String SQL_FIND_LECTURE = "SELECT * FROM lectures WHERE id = ?";
-    private final static String SQL_UPDATE_LECTURE = "UPDATE lectures SET subject_id = ?, teacher_id = ?, time_period_id" +
+    private static final String SQL_FIND_LECTURE = "SELECT * FROM lectures WHERE id = ?";
+    private static final String SQL_UPDATE_LECTURE = "UPDATE lectures SET subject_id = ?, teacher_id = ?, time_period_id" +
             " = ?, classroom_id = ? WHERE id = ?";
-    private final static String SQL_DELETE_LECTURE = "DELETE FROM lectures WHERE id = ?";
-    private final static String SQL_INSERT_LECTURE = "INSERT INTO lectures(teacher_id, time_period_id, classroom_id, subject_id) VALUES(?, ?, ?, ?)";
-    private final static String SQL_GET_ALL_LECTURE = "SELECT * FROM lectures";
-    private final static String SQL_GET_ALL_GROUPS = "SELECT * FROM groups JOIN lectures_groups ON groups.id = lectures_groups.group_id WHERE lecture_id = ?";
-    private final static String SQL_ADD_GROUP = "INSERT INTO lectures_groups(lecture_id, group_id) VALUES (?, ?)";
-    private final static String SQL_DELETE_GROUP = "DELETE FROM lectures_groups WHERE lecture_id = ? AND group_id = ?";
+    private static final String SQL_DELETE_LECTURE = "DELETE FROM lectures WHERE id = ?";
+    private static final String SQL_INSERT_LECTURE = "INSERT INTO lectures(teacher_id, time_period_id, classroom_id, subject_id) VALUES(?, ?, ?, ?)";
+    private static final String SQL_GET_ALL_LECTURE = "SELECT * FROM lectures";
+    private static final String SQL_GET_ALL_GROUPS = "SELECT * FROM groups JOIN lectures_groups ON groups.id = lectures_groups.group_id WHERE lecture_id = ?";
+    private static final String SQL_ADD_GROUP = "INSERT INTO lectures_groups(lecture_id, group_id) VALUES (?, ?)";
+    private static final String SQL_DELETE_GROUP = "DELETE FROM lectures_groups WHERE lecture_id = ? AND group_id = ?";
     private JdbcTemplate jdbcTemplate;
     @Autowired
     private LectureMapper lectureMapper;

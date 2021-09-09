@@ -14,14 +14,14 @@ import java.util.List;
 
 @Component
 public class GroupJdbcDao implements GroupDao {
-    private final static String SQL_FIND_GROUP = "SELECT * FROM groups WHERE id = ?";
-    private final static String SQL_UPDATE_GROUP = "UPDATE groups SET name = ? WHERE id = ?";
-    private final static String SQL_DELETE_GROUP = "DELETE FROM groups WHERE id = ?";
-    private final static String SQL_INSERT_GROUP = "INSERT INTO groups(name) VALUES(?)";
-    private final static String SQL_GET_ALL_GROUP = "SELECT * FROM groups";
-    private final static String SQL_INSERT_STUDENT = "INSERT INTO students_groups(student_id, group_id) VALUES(?, ?)";
-    private final static String SQL_DELETE_STUDENT = "DELETE FROM students_groups WHERE student_id = ? AND group_id = ?";
-    private final static String SQL_GET_ALL_STUDENTS = "SELECT * FROM students JOIN students_groups ON student_id = students.id WHERE group_id = ?";
+    private static final String SQL_FIND_GROUP = "SELECT * FROM groups WHERE id = ?";
+    private static final String SQL_UPDATE_GROUP = "UPDATE groups SET name = ? WHERE id = ?";
+    private static final String SQL_DELETE_GROUP = "DELETE FROM groups WHERE id = ?";
+    private static final String SQL_INSERT_GROUP = "INSERT INTO groups(name) VALUES(?)";
+    private static final String SQL_GET_ALL_GROUP = "SELECT * FROM groups";
+    private static final String SQL_INSERT_STUDENT = "INSERT INTO students_groups(student_id, group_id) VALUES(?, ?)";
+    private static final String SQL_DELETE_STUDENT = "DELETE FROM students_groups WHERE student_id = ? AND group_id = ?";
+    private static final String SQL_GET_ALL_STUDENTS = "SELECT * FROM students JOIN students_groups ON student_id = students.id WHERE group_id = ?";
     private JdbcTemplate jdbcTemplate;
     @Autowired
     private GroupMapper groupMapper;

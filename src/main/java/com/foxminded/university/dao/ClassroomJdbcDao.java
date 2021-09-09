@@ -12,11 +12,11 @@ import java.util.List;
 
 @Component
 public class ClassroomJdbcDao implements ClassroomDao {
-    private final static String SQL_FIND_CLASSROOM = "SELECT * FROM classrooms WHERE id = ?";
-    private final static String SQL_UPDATE_CLASSROOM = "UPDATE classrooms SET capacity = ? WHERE id = ?";
-    private final static String SQL_DELETE_CLASSROOM = "DELETE FROM classrooms WHERE id = ?";
-    private final static String SQL_INSERT_CLASSROOM = "INSERT INTO classrooms(capacity) VALUES(?)";
-    private final static String SQL_GET_ALL_CLASSROOM = "SELECT * FROM classrooms";
+    private static final String SQL_FIND_CLASSROOM = "SELECT * FROM classrooms WHERE id = ?";
+    private static final String SQL_UPDATE_CLASSROOM = "UPDATE classrooms SET capacity = ? WHERE id = ?";
+    private static final String SQL_DELETE_CLASSROOM = "DELETE FROM classrooms WHERE id = ?";
+    private static final String SQL_INSERT_CLASSROOM = "INSERT INTO classrooms(capacity) VALUES(?)";
+    private static final String SQL_GET_ALL_CLASSROOM = "SELECT * FROM classrooms";
     private JdbcTemplate jdbcTemplate;
     @Autowired
     private ClassroomMapper classroomMapper;

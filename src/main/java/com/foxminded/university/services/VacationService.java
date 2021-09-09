@@ -1,6 +1,5 @@
 package com.foxminded.university.services;
 
-import com.foxminded.university.dao.TimePeriodJdbcDao;
 import com.foxminded.university.dao.VacationJdbcDao;
 import com.foxminded.university.entities.Vacation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +10,10 @@ import java.util.List;
 @Service
 public class VacationService {
     private VacationJdbcDao vacationJdbcDao;
-    private TimePeriodJdbcDao timePeriodJdbcDao;
 
     @Autowired
-    public VacationService(VacationJdbcDao vacationJdbcDao, TimePeriodJdbcDao timePeriodJdbcDao) {
+    public VacationService(VacationJdbcDao vacationJdbcDao) {
         this.vacationJdbcDao = vacationJdbcDao;
-        this.timePeriodJdbcDao = timePeriodJdbcDao;
     }
 
     public void addVacation(Vacation vacation) {

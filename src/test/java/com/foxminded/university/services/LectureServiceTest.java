@@ -18,7 +18,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 @ActiveProfiles("test")
 @SpringJUnitConfig(TestConfig.class)
-public class LectureServiceTest {
+class LectureServiceTest {
     @Mock
     private LectureJdbcDao lectureJdbcDao;
     @InjectMocks
@@ -29,37 +29,37 @@ public class LectureServiceTest {
     Lecture lecture;
 
     @Test
-    public void addLectureDaoWasUsed() {
+    void addLectureDaoWasUsed() {
         lectureService.addLecture(any());
         verify(lectureJdbcDao, times(1)).create(any());
     }
 
     @Test
-    public void getLectureByIdDaoWasUsed() {
+    void getLectureByIdDaoWasUsed() {
         lectureService.getLectureById((long) 1);
         verify(lectureJdbcDao, times(1)).getById(any());
     }
 
     @Test
-    public void deleteLectureByIdDaoWasUsed() {
+    void deleteLectureByIdDaoWasUsed() {
         lectureService.deleteLectureById((long) 1);
         verify(lectureJdbcDao, times(1)).delete(any());
     }
 
     @Test
-    public void getAllLecturesDaoWasUsed() {
+    void getAllLecturesDaoWasUsed() {
         lectureService.getAllLectures();
         verify(lectureJdbcDao, times(1)).getAll();
     }
 
     @Test
-    public void updateLectureDaoWasUsed() {
+    void updateLectureDaoWasUsed() {
         lectureService.updateLecture(any());
         verify(lectureJdbcDao, times(1)).update(any());
     }
 
     @Test
-    public void addGroupDaoWasUsed() {
+    void addGroupDaoWasUsed() {
         when(group.getId()).thenReturn((long) 1);
         when(lecture.getId()).thenReturn((long) 1);
         lectureService.addGroup(lecture, group);
@@ -67,7 +67,7 @@ public class LectureServiceTest {
     }
 
     @Test
-    public void getGroupsFromLectureDaoWasUsed() {
+    void getGroupsFromLectureDaoWasUsed() {
         lectureService.getGroupsFromLecture((long) 1);
         verify(lectureJdbcDao, times(1)).getGroupsFromLecture(anyLong());
     }

@@ -13,12 +13,12 @@ import java.sql.SQLException;
 
 @Component
 public class LectureMapper implements RowMapper<Lecture> {
-    private final static String ID = "id";
-    private final static String CLASSROOM = "classroom_id";
-    private final static String SUBJECT = "subject_id";
-    private final static String TEACHER = "teacher_id";
-    private final static String TIME_PERIOD = "time_period_id";
-    private final static String MAPPER_EXCEPTION = "Exception in MapperClass";
+    private static final String ID = "id";
+    private static final String CLASSROOM = "classroom_id";
+    private static final String SUBJECT = "subject_id";
+    private static final String TEACHER = "teacher_id";
+    private static final String TIME_PERIOD = "time_period_id";
+    private static final String MAPPER_EXCEPTION = "Exception in MapperClass";
 
     private SubjectDao subjectDao;
     private TeacherDao teacherDao;

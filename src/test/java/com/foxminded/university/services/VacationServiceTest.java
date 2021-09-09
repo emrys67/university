@@ -18,7 +18,7 @@ import static org.mockito.Mockito.*;
 @ActiveProfiles("test")
 @SpringJUnitConfig(TestConfig.class)
 @ExtendWith(MockitoExtension.class)
-public class VacationServiceTest {
+class VacationServiceTest {
     @Mock
     private VacationJdbcDao vacationJdbcDao;
     @Mock
@@ -27,31 +27,31 @@ public class VacationServiceTest {
     private VacationService vacationService;
 
     @Test
-    public void addVacationDaoWasUsed() {
+    void addVacationDaoWasUsed() {
         vacationService.addVacation(any());
         verify(vacationJdbcDao, times(1)).create(any());
     }
 
     @Test
-    public void getVacationByIdDaoWasUsed() {
+    void getVacationByIdDaoWasUsed() {
         vacationService.getVacationById(anyLong());
         verify(vacationJdbcDao, times(1)).getById(any());
     }
 
     @Test
-    public void deleteVacationByIdDaoWasUsed() {
+    void deleteVacationByIdDaoWasUsed() {
         vacationService.deleteVacationById(anyLong());
         verify(vacationJdbcDao, times(1)).delete(any());
     }
 
     @Test
-    public void getAllVacationsDaoWasUsed() {
+    void getAllVacationsDaoWasUsed() {
         vacationService.getAllVacations();
         verify(vacationJdbcDao, times(1)).getAll();
     }
 
     @Test
-    public void updateVacationDaoWasUsed() {
+    void updateVacationDaoWasUsed() {
         vacationService.updateVacation(any());
         verify(vacationJdbcDao, times(1)).update(any());
     }

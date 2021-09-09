@@ -21,7 +21,7 @@ import static org.mockito.Mockito.when;
 @ActiveProfiles("test")
 @SpringJUnitConfig(TestConfig.class)
 @ExtendWith(MockitoExtension.class)
-public class SubjectServiceTest {
+class SubjectServiceTest {
     @Mock
     private SubjectJdbcDao subjectJdbcDao;
     @InjectMocks
@@ -32,37 +32,37 @@ public class SubjectServiceTest {
     Subject subject;
 
     @Test
-    public void addSubjectDaoWasUsed() {
+    void addSubjectDaoWasUsed() {
         subjectService.addSubject(any());
         verify(subjectJdbcDao, times(1)).create(any());
     }
 
     @Test
-    public void getSubjectByIdDaoWasUsed() {
+    void getSubjectByIdDaoWasUsed() {
         subjectService.getSubjectById((long) 1);
         verify(subjectJdbcDao, times(1)).getById(any());
     }
 
     @Test
-    public void deleteSubjectByIdDaoWasUsed() {
+    void deleteSubjectByIdDaoWasUsed() {
         subjectService.deleteSubjectById((long) 1);
         verify(subjectJdbcDao, times(1)).delete(any());
     }
 
     @Test
-    public void getAllSubjectsDaoWasUsed() {
+    void getAllSubjectsDaoWasUsed() {
         subjectService.getAllSubjects();
         verify(subjectJdbcDao, times(1)).getAll();
     }
 
     @Test
-    public void updateSubjectDaoWasUsed() {
+    void updateSubjectDaoWasUsed() {
         subjectService.updateSubject(any());
         verify(subjectJdbcDao, times(1)).update(any());
     }
 
     @Test
-    public void addTeacherDaoWasUsed() {
+    void addTeacherDaoWasUsed() {
         when(teacher.getId()).thenReturn((long) 1);
         when(subject.getId()).thenReturn((long) 1);
         subjectService.addTeacher(teacher, subject);
@@ -70,7 +70,7 @@ public class SubjectServiceTest {
     }
 
     @Test
-    public void getTeachersFromSubjectDaoWasUsed() {
+    void getTeachersFromSubjectDaoWasUsed() {
         subjectService.getTeachersFromSubject((long) 1);
         verify(subjectJdbcDao, times(1)).getTeachersFromSubject(anyLong());
     }

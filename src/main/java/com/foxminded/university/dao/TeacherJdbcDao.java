@@ -12,13 +12,13 @@ import java.util.List;
 
 @Component
 public class TeacherJdbcDao implements TeacherDao {
-    private final static String SQL_FIND_TEACHER = "SELECT * FROM teachers WHERE id = ?";
-    private final static String SQL_UPDATE_TEACHER = "UPDATE teachers SET firstname = ?, lastname = ?, date_of_birth = ?," +
+    private static final String SQL_FIND_TEACHER = "SELECT * FROM teachers WHERE id = ?";
+    private static final String SQL_UPDATE_TEACHER = "UPDATE teachers SET firstname = ?, lastname = ?, date_of_birth = ?," +
             " gender = ?, vacation_id = ?, working_hours_id = ?  WHERE id = ?";
-    private final static String SQL_DELETE_TEACHER = "DELETE FROM teachers WHERE id = ?";
-    private final static String SQL_INSERT_TEACHER = "INSERT INTO teachers(firstname, lastname, date_of_birth, gender," +
+    private static final String SQL_DELETE_TEACHER = "DELETE FROM teachers WHERE id = ?";
+    private static final String SQL_INSERT_TEACHER = "INSERT INTO teachers(firstname, lastname, date_of_birth, gender," +
             " vacation_id, working_hours_id) VALUES(?, ?, ?, ?, ?, ?)";
-    private final static String SQL_GET_ALL_TEACHER = "SELECT * FROM teachers";
+    private static final String SQL_GET_ALL_TEACHER = "SELECT * FROM teachers";
     private JdbcTemplate jdbcTemplate;
     @Autowired
     private TeacherMapper teacherMapper;

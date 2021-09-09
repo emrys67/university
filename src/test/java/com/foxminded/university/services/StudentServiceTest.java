@@ -17,38 +17,38 @@ import static org.mockito.Mockito.verify;
 @ActiveProfiles("test")
 @SpringJUnitConfig(TestConfig.class)
 @ExtendWith(MockitoExtension.class)
-public class StudentServiceTest {
+class StudentServiceTest {
     @Mock
     private StudentJdbcDao studentJdbcDao;
     @InjectMocks
     private StudentService studentService;
 
     @Test
-    public void addStudentDaoWasUsed() {
+    void addStudentDaoWasUsed() {
         studentService.addStudent(any());
         verify(studentJdbcDao, times(1)).create(any());
     }
 
     @Test
-    public void getStudentByIdDaoWasUsed() {
+    void getStudentByIdDaoWasUsed() {
         studentService.getStudentById((long) 1);
         verify(studentJdbcDao, times(1)).getById(any());
     }
 
     @Test
-    public void deleteStudentByIdDaoWasUsed() {
+    void deleteStudentByIdDaoWasUsed() {
         studentService.deleteStudentById((long) 1);
         verify(studentJdbcDao, times(1)).delete(any());
     }
 
     @Test
-    public void getAllStudentsDaoWasUsed() {
+    void getAllStudentsDaoWasUsed() {
         studentService.getAllStudents();
         verify(studentJdbcDao, times(1)).getAll();
     }
 
     @Test
-    public void updateStudentDaoWasUsed() {
+    void updateStudentDaoWasUsed() {
         studentService.updateStudent(any());
         verify(studentJdbcDao, times(1)).update(any());
     }

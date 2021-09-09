@@ -18,7 +18,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 @ActiveProfiles("test")
 @SpringJUnitConfig(TestConfig.class)
-public class GroupServiceTest {
+class GroupServiceTest {
     @Mock
     private GroupJdbcDao groupJdbcDao;
     @InjectMocks
@@ -29,37 +29,37 @@ public class GroupServiceTest {
     private Student student;
 
     @Test
-    public void addGroupDaoWasUsed() {
+    void addGroupDaoWasUsed() {
         groupService.addGroup(any());
         verify(groupJdbcDao, times(1)).create(any());
     }
 
     @Test
-    public void getGroupByIdDaoWasUsed() {
+    void getGroupByIdDaoWasUsed() {
         groupService.getGroupById(1);
         verify(groupJdbcDao, times(1)).getById(any());
     }
 
     @Test
-    public void deleteGroupByIdDaoWasUsed() {
+    void deleteGroupByIdDaoWasUsed() {
         groupService.deleteGroupById((long) 1);
         verify(groupJdbcDao, times(1)).delete(any());
     }
 
     @Test
-    public void getAllGroupsDaoWasUsed() {
+    void getAllGroupsDaoWasUsed() {
         groupService.getAllGroups();
         verify(groupJdbcDao, times(1)).getAll();
     }
 
     @Test
-    public void updateGroupDaoWasUsed() {
+    void updateGroupDaoWasUsed() {
         groupService.updateGroup(any());
         verify(groupJdbcDao, times(1)).update(any());
     }
 
     @Test
-    public void addStudentDaoWasUsed() {
+    void addStudentDaoWasUsed() {
         when(group.getId()).thenReturn((long) 1);
         when(student.getId()).thenReturn((long) 1);
         groupService.addStudent(student, group);
@@ -67,7 +67,7 @@ public class GroupServiceTest {
     }
 
     @Test
-    public void getStudentsFromGroupDaoWasUsed() {
+    void getStudentsFromGroupDaoWasUsed() {
         groupService.getStudentsFromGroup((long) 1);
         verify(groupJdbcDao, times(1)).getStudentsFromGroup((long) 1);
     }

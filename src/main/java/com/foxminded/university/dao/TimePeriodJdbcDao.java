@@ -12,13 +12,13 @@ import java.util.List;
 
 @Component
 public class TimePeriodJdbcDao implements TimePeriodDao {
-    private final static String SQL_FIND_TIME_PERIOD = "SELECT * FROM time_periods WHERE id = ?";
-    private final static String SQL_UPDATE_TIME_PERIOD = "UPDATE time_periods SET start_time = ?, end_time = ?," +
+    private static final String SQL_FIND_TIME_PERIOD = "SELECT * FROM time_periods WHERE id = ?";
+    private static final String SQL_UPDATE_TIME_PERIOD = "UPDATE time_periods SET start_time = ?, end_time = ?," +
             "start_date = ?, end_date = ? WHERE id = ?";
-    private final static String SQL_DELETE_TIME_PERIOD = "DELETE FROM time_periods WHERE id = ?";
-    private final static String SQL_INSERT_TIME_PERIOD = "INSERT INTO time_periods(start_time, end_time, start_date," +
+    private static final String SQL_DELETE_TIME_PERIOD = "DELETE FROM time_periods WHERE id = ?";
+    private static final String SQL_INSERT_TIME_PERIOD = "INSERT INTO time_periods(start_time, end_time, start_date," +
             " end_date) VALUES(?, ?, ?, ?)";
-    private final static String SQL_GET_ALL_TIME_PERIOD = "SELECT * FROM time_periods";
+    private static final String SQL_GET_ALL_TIME_PERIOD = "SELECT * FROM time_periods";
     private JdbcTemplate jdbcTemplate;
     @Autowired
     private TimePeriodMapper timePeriodMapper;

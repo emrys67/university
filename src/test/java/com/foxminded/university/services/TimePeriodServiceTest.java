@@ -17,38 +17,38 @@ import static org.mockito.Mockito.verify;
 @ActiveProfiles("test")
 @SpringJUnitConfig(TestConfig.class)
 @ExtendWith(MockitoExtension.class)
-public class TimePeriodServiceTest {
+class TimePeriodServiceTest {
     @Mock
     private TimePeriodJdbcDao timePeriodJdbcDao;
     @InjectMocks
     private TimePeriodService timePeriodService;
 
     @Test
-    public void addClassroomDaoWasUsed() {
+    void addClassroomDaoWasUsed() {
         timePeriodService.addTimePeriod(any());
         verify(timePeriodJdbcDao, times(1)).create(any());
     }
 
     @Test
-    public void getTimePeriodByIdDaoWasUsed() {
+    void getTimePeriodByIdDaoWasUsed() {
         timePeriodService.getTimePeriodById((long) 1);
         verify(timePeriodJdbcDao, times(1)).getById(any());
     }
 
     @Test
-    public void deleteTimePeriodByIdDaoWasUsed() {
+    void deleteTimePeriodByIdDaoWasUsed() {
         timePeriodService.deleteTimePeriodById((long) 1);
         verify(timePeriodJdbcDao, times(1)).delete(any());
     }
 
     @Test
-    public void getAllTimePeriodsDaoWasUsed() {
+    void getAllTimePeriodsDaoWasUsed() {
         timePeriodService.getAllTimePeriods();
         verify(timePeriodJdbcDao, times(1)).getAll();
     }
 
     @Test
-    public void updateTimePeriodDaoWasUsed() {
+    void updateTimePeriodDaoWasUsed() {
         timePeriodService.updateTimePeriod(any());
         verify(timePeriodJdbcDao, times(1)).update(any());
     }
