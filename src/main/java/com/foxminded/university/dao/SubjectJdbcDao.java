@@ -14,16 +14,16 @@ import java.util.List;
 
 @Component
 public class SubjectJdbcDao implements SubjectDao {
-    private final static String SQL_FIND_SUBJECT = "SELECT * FROM subjects WHERE id = ?";
-    private final static String SQL_UPDATE_SUBJECT = "UPDATE subjects SET name = ?, description = ?, supervisor_id = ?" +
+    private static final String SQL_FIND_SUBJECT = "SELECT * FROM subjects WHERE id = ?";
+    private static final String SQL_UPDATE_SUBJECT = "UPDATE subjects SET name = ?, description = ?, supervisor_id = ?" +
             " WHERE id = ?";
-    private final static String SQL_DELETE_SUBJECT = "DELETE FROM subjects WHERE id = ?";
-    private final static String SQL_INSERT_SUBJECT = "INSERT INTO subjects(name, description, supervisor_id) VALUES(?, ?, ?)";
-    private final static String SQL_GET_ALL_SUBJECT = "SELECT * FROM subjects";
-    private final static String SQL_GET_ALL_TEACHERS = "SELECT * FROM teachers JOIN subjects_teachers ON teachers.id = " +
+    private static final String SQL_DELETE_SUBJECT = "DELETE FROM subjects WHERE id = ?";
+    private static final String SQL_INSERT_SUBJECT = "INSERT INTO subjects(name, description, supervisor_id) VALUES(?, ?, ?)";
+    private static final String SQL_GET_ALL_SUBJECT = "SELECT * FROM subjects";
+    private static final String SQL_GET_ALL_TEACHERS = "SELECT * FROM teachers JOIN subjects_teachers ON teachers.id = " +
             "subjects_teachers.teacher_id WHERE subject_id = ?";
-    private final static String SQL_ADD_TEACHER = "INSERT INTO subjects_teachers(teacher_id, subject_id) VALUES (?, ?)";
-    private final static String SQL_DELETE_TEACHER = "DELETE FROM subjects_teachers WHERE teacher_id = ? AND subject_id = ?";
+    private static final String SQL_ADD_TEACHER = "INSERT INTO subjects_teachers(teacher_id, subject_id) VALUES (?, ?)";
+    private static final String SQL_DELETE_TEACHER = "DELETE FROM subjects_teachers WHERE teacher_id = ? AND subject_id = ?";
     private JdbcTemplate jdbcTemplate;
     @Autowired
     private TeacherMapper teacherMapper;

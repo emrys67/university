@@ -12,11 +12,11 @@ import java.util.List;
 
 @Component
 public class VacationJdbcDao implements VacationDao {
-    private final static String SQL_FIND_VACATION = "SELECT * FROM vacations WHERE id = ?";
-    private final static String SQL_UPDATE_VACATION = "UPDATE vacations SET description = ?, time_period_id = ? WHERE id = ?";
-    private final static String SQL_DELETE_VACATION = "DELETE FROM vacations WHERE id = ?";
-    private final static String SQL_INSERT_VACATION = "INSERT INTO vacations(description, time_period_id) VALUES(?, ?)";
-    private final static String SQL_GET_ALL_VACATION = "SELECT * FROM vacations";
+    private static final String SQL_FIND_VACATION = "SELECT * FROM vacations WHERE id = ?";
+    private static final String SQL_UPDATE_VACATION = "UPDATE vacations SET description = ?, time_period_id = ? WHERE id = ?";
+    private static final String SQL_DELETE_VACATION = "DELETE FROM vacations WHERE id = ?";
+    private static final String SQL_INSERT_VACATION = "INSERT INTO vacations(description, time_period_id) VALUES(?, ?)";
+    private static final String SQL_GET_ALL_VACATION = "SELECT * FROM vacations";
     private JdbcTemplate jdbcTemplate;
     @Autowired
     private VacationMapper vacationMapper;

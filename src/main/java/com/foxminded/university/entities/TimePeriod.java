@@ -15,6 +15,13 @@ public class TimePeriod {
     public TimePeriod() {
     }
 
+    public TimePeriod(Date startDate, Date endDate, LocalTime startTime, LocalTime endTime) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
+
     public TimePeriod(long id, Date startDate, Date endDate, LocalTime startTime, LocalTime endTime) {
         this.id = id;
         this.startDate = startDate;

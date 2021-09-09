@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
@@ -65,7 +64,7 @@ public class LectureJdbcDaoTest {
         TimePeriod timePeriod = timePeriodJdbcDao.getById((long) 1);
         Teacher teacher = teacherJdbcDao.getById((long) 1);
         Classroom classroom = classroomJdbcDao.getById((long) 1);
-        Lecture lecture = new Lecture(subject, new ArrayList<>(), teacher, timePeriod, classroom, (long) 1);
+        Lecture lecture = new Lecture().setSubject(subject).setGroups(new ArrayList<>()).setTeacher(teacher).setTimePeriod(timePeriod).setClassroom(classroom).setId((long) 1).createLecture();
         lectureJdbcDao.update(lecture);
         assertEquals(lecture, lectureJdbcDao.getById((long) 1));
     }
@@ -76,7 +75,7 @@ public class LectureJdbcDaoTest {
         TimePeriod timePeriod = timePeriodJdbcDao.getById((long) 1);
         Teacher teacher = teacherJdbcDao.getById((long) 1);
         Classroom classroom = classroomJdbcDao.getById((long) 1);
-        Lecture lecture = new Lecture(subject, new ArrayList<>(), teacher, timePeriod, classroom);
+        Lecture lecture = new Lecture().setSubject(subject).setGroups(new ArrayList<>()).setTeacher(teacher).setTimePeriod(timePeriod).setClassroom(classroom).createLecture();
         lectureJdbcDao.create(lecture);
         assertEquals(lecture.getSubject(), lectureJdbcDao.getById((long) 4).getSubject());
     }
