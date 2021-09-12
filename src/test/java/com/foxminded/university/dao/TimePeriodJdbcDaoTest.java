@@ -1,6 +1,7 @@
 package com.foxminded.university.dao;
 
 import com.foxminded.university.config.TestConfig;
+import com.foxminded.university.dao.exceptions.DaoException;
 import com.foxminded.university.entities.TimePeriod;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -33,7 +34,7 @@ public class TimePeriodJdbcDaoTest {
 
     @Test
     void getByWrongId() {
-        Assertions.assertThrows(EmptyResultDataAccessException.class, () -> {
+        Assertions.assertThrows(DaoException.class, () -> {
             timePeriodJdbcDao.getById((long) 20);
         });
     }
@@ -46,7 +47,7 @@ public class TimePeriodJdbcDaoTest {
 
     @Test
     void delete() {
-        Assertions.assertThrows(EmptyResultDataAccessException.class, () -> {
+        Assertions.assertThrows(DaoException.class, () -> {
             timePeriodJdbcDao.delete((long) 1);
             timePeriodJdbcDao.getById((long) 1);
         });
@@ -69,7 +70,7 @@ public class TimePeriodJdbcDaoTest {
 
     @Test
     void createWithNullObject() {
-        Assertions.assertThrows(NullPointerException.class, () -> {
+        Assertions.assertThrows(DaoException.class, () -> {
             timePeriodJdbcDao.create(null);
         });
     }

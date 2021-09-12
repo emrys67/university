@@ -33,7 +33,7 @@ public class SpringConfig {
         return new JdbcTemplate(dataSource);
     }
 
-    @Profile("main")
+    @Profile("!test")
     @Bean
     public DataSource postgresDataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();

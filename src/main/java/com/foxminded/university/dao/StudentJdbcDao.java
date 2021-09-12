@@ -1,14 +1,21 @@
 package com.foxminded.university.dao;
 
+import com.foxminded.university.dao.exceptions.DaoException;
 import com.foxminded.university.dao.interfaces.StudentDao;
 import com.foxminded.university.dao.mappers.StudentMapper;
 import com.foxminded.university.entities.Student;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.util.List;
+
+import static java.lang.String.format;
 
 @Component
 public class StudentJdbcDao implements StudentDao {
@@ -19,6 +26,7 @@ public class StudentJdbcDao implements StudentDao {
     private static final String SQL_INSERT_STUDENT = "INSERT INTO students(firstname, lastname, date_of_birth, gender," +
             " study_year) VALUES(?, ?, ?, ?, ?)";
     private static final String SQL_GET_ALL_STUDENT = "SELECT * FROM students";
+    private static final Logger logger = LoggerFactory.getLogger(StudentJdbcDao.class.getName());
     private JdbcTemplate jdbcTemplate;
     @Autowired
     private StudentMapper studentMapper;
@@ -29,24 +37,53 @@ public class StudentJdbcDao implements StudentDao {
     }
 
     public Student getById(Long id) {
-        return jdbcTemplate.queryForObject(SQL_FIND_STUDENT, studentMapper, id);
+        Student student;
+        logger.info("Getting student by id {}", id);
+        try {
+            student = jdbcTemplate.queryForObject(SQL_FIND_STUDENT, studentMapper, id);
+        } catch (EmptyResultDataAccessException exception) {
+            String msg = format("Couldn't find student with id '%s'", id);
+            throw new DaoException(msg, exception);
+        } catch (DataAccessException exception) {
+            String msg = format("Unable to get student with ID '%s'", id);
+            throw new DaoException(msg, exception);
+        }
+        return student;
     }
 
     public List<Student> getAll() {
+        logger.info("Getting all students");
         return jdbcTemplate.query(SQL_GET_ALL_STUDENT, studentMapper);
     }
 
     public void delete(Long id) {
+        logger.info("Deleting student by id {}", id);
         jdbcTemplate.update(SQL_DELETE_STUDENT, id);
     }
 
     public void update(Student student) {
-        jdbcTemplate.update(SQL_UPDATE_STUDENT, student.getFirstname(), student.getLastname(), student.getDateOfBirth(),
-                student.getGender(), student.getStudyYear(), student.getId());
+        logger.info("Updating student with id {}", student.getId());
+        boolean success = jdbcTemplate.update(SQL_UPDATE_STUDENT, student.getFirstname(), student.getLastname(), student.getDateOfBirth(),
+                student.getGender(), student.getStudyYear(), student.getId()) > 0;
+        if (success) {
+            logger.info("Student with id {} has been updated", student.getId());
+        } else {
+            String msg = format("Student with id %s has not been updated", student.getId());
+            logger.warn(msg);
+            throw new DaoException(msg);
+        }
     }
 
     public void create(Student student) {
-        jdbcTemplate.update(SQL_INSERT_STUDENT, student.getFirstname(), student.getLastname(), student.getDateOfBirth(),
-                student.getGender(), student.getStudyYear());
+        logger.info("Creating student");
+        try {
+            jdbcTemplate.update(SQL_INSERT_STUDENT, student.getFirstname(), student.getLastname(), student.getDateOfBirth(),
+                    student.getGender(), student.getStudyYear());
+            logger.info("Student has been created");
+        } catch (NullPointerException exception) {
+            String msg = "Cannot create student, because student is null";
+            logger.warn(msg);
+            throw new DaoException(msg, exception);
+        }
     }
 }

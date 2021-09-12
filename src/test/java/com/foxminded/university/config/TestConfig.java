@@ -20,7 +20,7 @@ public class TestConfig {
     }
 
     @Bean
-    @Profile("test")
+//    @Profile("test")
     DataSource testDataSource() {
         DataSource dataSource = new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2)
                 .addScript(SCRIPT_SCHEMA)

@@ -1,6 +1,7 @@
 package com.foxminded.university.dao;
 
 import com.foxminded.university.config.TestConfig;
+import com.foxminded.university.dao.exceptions.DaoException;
 import com.foxminded.university.entities.Vacation;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -27,7 +28,7 @@ public class VacationJdbcDaoTest {
 
     @Test
     void getByWrongId() {
-        Assertions.assertThrows(EmptyResultDataAccessException.class, () -> {
+        Assertions.assertThrows(DaoException.class, () -> {
             vacationJdbcDao.getById((long) 20);
         });
     }
@@ -40,7 +41,7 @@ public class VacationJdbcDaoTest {
 
     @Test
     void delete() {
-        Assertions.assertThrows(EmptyResultDataAccessException.class, () -> {
+        Assertions.assertThrows(DaoException.class, () -> {
             vacationJdbcDao.delete((long) 1);
             vacationJdbcDao.getById((long) 1);
         });
@@ -63,7 +64,7 @@ public class VacationJdbcDaoTest {
 
     @Test
     void createWithNullObject() {
-        Assertions.assertThrows(NullPointerException.class, () -> {
+        Assertions.assertThrows(DaoException.class, () -> {
             vacationJdbcDao.create(null);
         });
     }
