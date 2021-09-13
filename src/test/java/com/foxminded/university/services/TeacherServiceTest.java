@@ -29,7 +29,8 @@ class TeacherServiceTest {
 
     @Test
     void addTeacherDaoWasUsed() {
-        teacherService.addTeacher(any());
+        Teacher teacher = teacherJdbcDao.getById((long) 1);
+        teacherService.addTeacher(teacher);
         verify(teacherJdbcDaoMock, times(1)).create(any());
     }
 

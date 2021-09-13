@@ -24,10 +24,15 @@ public class TimePeriodService {
     }
 
     public void addTimePeriod(TimePeriod timePeriod) {
-        logger.info("Start service for adding timePeriod");
+        logger.debug("Start service for adding timePeriod");
+        if (timePeriod == null) {
+            String msg = "Cannot create timePeriod, because timePeriod is null";
+            logger.warn(msg);
+            throw new ServiceException(msg);
+        }
         try {
             timePeriodJdbcDao.create(timePeriod);
-            logger.info("TimePeriod has been added successfully");
+            logger.debug("TimePeriod has been added successfully");
         } catch (DaoException exception) {
             String msg = "TimePeriod has not been added";
             logger.warn(msg);
@@ -36,7 +41,7 @@ public class TimePeriodService {
     }
 
     public TimePeriod getTimePeriodById(long id) {
-        logger.info("Start service for getting timePeriod by id {}", id);
+        logger.debug("Start service for getting timePeriod by id {}", id);
         try {
             return timePeriodJdbcDao.getById(id);
         } catch (DaoException exception) {
@@ -47,7 +52,7 @@ public class TimePeriodService {
     }
 
     public void deleteTimePeriodById(long id) {
-        logger.info("Start service for deleting timePeriod by id {}", id);
+        logger.debug("Start service for deleting timePeriod by id {}", id);
         try {
             timePeriodJdbcDao.getById(id);
         } catch (DaoException exception) {
@@ -56,16 +61,16 @@ public class TimePeriodService {
             throw new ServiceException(msg, exception);
         }
         timePeriodJdbcDao.delete(id);
-        logger.info("TimePeriod id {} has been deleted", id);
+        logger.debug("TimePeriod id {} has been deleted", id);
     }
 
     public List<TimePeriod> getAllTimePeriods() {
-        logger.info("Start service for getting all timePeriods");
+        logger.debug("Start service for getting all timePeriods");
         return timePeriodJdbcDao.getAll();
     }
 
     public void updateTimePeriod(TimePeriod timePeriod) {
-        logger.info("Start service for updating timePeriod with id {}", timePeriod.getId());
+        logger.debug("Start service for updating timePeriod with id {}", timePeriod.getId());
         try {
             timePeriodJdbcDao.getById(timePeriod.getId());
         } catch (DaoException exception) {

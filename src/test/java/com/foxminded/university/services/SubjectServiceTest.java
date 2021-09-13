@@ -34,14 +34,11 @@ class SubjectServiceTest {
     private TeacherJdbcDao teacherJdbcDao;
     @InjectMocks
     private SubjectService subjectService;
-    @Mock
-    Teacher teacher;
-    @Mock
-    Subject subject;
 
     @Test
     void addSubjectDaoWasUsed() {
-        subjectService.addSubject(any());
+        Subject subject = subjectJdbcDao.getById((long) 1);
+        subjectService.addSubject(subject);
         verify(subjectJdbcDaoMock, times(1)).create(any());
     }
 

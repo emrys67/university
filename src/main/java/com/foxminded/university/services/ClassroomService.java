@@ -24,10 +24,15 @@ public class ClassroomService {
     }
 
     public void addClassroom(Classroom classroom) {
-        logger.info("Start service for adding classroom");
+        logger.debug("Start service for adding classroom");
+        if (classroom == null) {
+            String msg = "Cannot create classroom, because classroom is null";
+            logger.warn(msg);
+            throw new ServiceException(msg);
+        }
         try {
             classroomJdbcDao.create(classroom);
-            logger.info("Classroom has been added successfully");
+            logger.debug("Classroom has been added successfully");
         } catch (DaoException exception) {
             String msg = "Classroom has not been added";
             logger.warn(msg);
@@ -36,7 +41,7 @@ public class ClassroomService {
     }
 
     public Classroom getClassroomById(long id) {
-        logger.info("Start service for getting classroom by id {}", id);
+        logger.debug("Start service for getting classroom by id {}", id);
         try {
             return classroomJdbcDao.getById(id);
         } catch (DaoException exception) {
@@ -47,7 +52,7 @@ public class ClassroomService {
     }
 
     public void deleteClassroomById(long id) {
-        logger.info("Start service for deleting classroom by id {}", id);
+        logger.debug("Start service for deleting classroom by id {}", id);
         try {
             classroomJdbcDao.getById(id);
         } catch (DaoException exception) {
@@ -56,16 +61,16 @@ public class ClassroomService {
             throw new ServiceException(msg, exception);
         }
         classroomJdbcDao.delete(id);
-        logger.info("Classroom id {} has been deleted", id);
+        logger.debug("Classroom id {} has been deleted", id);
     }
 
     public List<Classroom> getAllClassrooms() {
-        logger.info("Start service for getting all classrooms");
+        logger.debug("Start service for getting all classrooms");
         return classroomJdbcDao.getAll();
     }
 
     public void updateClassroom(Classroom classroom) {
-        logger.info("Start service for updating classroom with id {}", classroom.getId());
+        logger.debug("Start service for updating classroom with id {}", classroom.getId());
         try {
             classroomJdbcDao.getById(classroom.getId());
         } catch (DaoException exception) {

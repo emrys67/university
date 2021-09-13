@@ -23,7 +23,7 @@ public class TimePeriodMapper implements RowMapper<TimePeriod> {
 
     public TimePeriod mapRow(ResultSet resultSet, int i) {
         try {
-            logger.info("Start rowMapper with timePeriod id {}", resultSet.getLong(ID));
+            logger.debug("Start rowMapper with timePeriod id {}", resultSet.getLong(ID));
             TimePeriod timePeriod = new TimePeriod();
             timePeriod.setId(resultSet.getLong(ID));
             timePeriod.setStartDate(resultSet.getDate(START_DATE));

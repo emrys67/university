@@ -24,10 +24,15 @@ public class VacationService {
     }
 
     public void addVacation(Vacation vacation) {
-        logger.info("Start service for adding vacation");
+        logger.debug("Start service for adding vacation");
+        if (vacation == null) {
+            String msg = "Cannot create vacation, because vacation` is null";
+            logger.warn(msg);
+            throw new ServiceException(msg);
+        }
         try {
             vacationJdbcDao.create(vacation);
-            logger.info("Vacation has been added successfully");
+            logger.debug("Vacation has been added successfully");
         } catch (DaoException exception) {
             String msg = "Vacation has not been added";
             logger.warn(msg);
@@ -36,7 +41,7 @@ public class VacationService {
     }
 
     public Vacation getVacationById(long id) {
-        logger.info("Start service for getting vacation by id {}", id);
+        logger.debug("Start service for getting vacation by id {}", id);
         try {
             return vacationJdbcDao.getById(id);
         } catch (DaoException exception) {
@@ -47,7 +52,7 @@ public class VacationService {
     }
 
     public void deleteVacationById(long id) {
-        logger.info("Start service for deleting vacation by id {}", id);
+        logger.debug("Start service for deleting vacation by id {}", id);
         try {
             vacationJdbcDao.getById(id);
         } catch (DaoException exception) {
@@ -56,16 +61,16 @@ public class VacationService {
             throw new ServiceException(msg, exception);
         }
         vacationJdbcDao.delete(id);
-        logger.info("Vacation id {} has been deleted", id);
+        logger.debug("Vacation id {} has been deleted", id);
     }
 
     public List<Vacation> getAllVacations() {
-        logger.info("Start service for getting all vacations");
+        logger.debug("Start service for getting all vacations");
         return vacationJdbcDao.getAll();
     }
 
     public void updateVacation(Vacation vacation) {
-        logger.info("Start service for updating vacation with id {}", vacation.getId());
+        logger.debug("Start service for updating vacation with id {}", vacation.getId());
         try {
             vacationJdbcDao.getById(vacation.getId());
         } catch (DaoException exception) {

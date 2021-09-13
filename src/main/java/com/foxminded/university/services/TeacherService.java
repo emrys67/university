@@ -24,10 +24,15 @@ public class TeacherService {
     }
 
     public void addTeacher(Teacher teacher) {
-        logger.info("Start service for adding teacher");
+        logger.debug("Start service for adding teacher");
+        if (teacher == null) {
+            String msg = "Cannot create teacher, because teacher is null";
+            logger.warn(msg);
+            throw new ServiceException(msg);
+        }
         try {
             teacherJdbcDao.create(teacher);
-            logger.info("Teacher has been added successfully");
+            logger.debug("Teacher has been added successfully");
         } catch (DaoException exception) {
             String msg = "Teacher has not been added";
             logger.warn(msg);
@@ -36,7 +41,7 @@ public class TeacherService {
     }
 
     public Teacher getTeacherById(long id) {
-        logger.info("Start service for getting teacher by id {}", id);
+        logger.debug("Start service for getting teacher by id {}", id);
         try {
             return teacherJdbcDao.getById(id);
         } catch (DaoException exception) {
@@ -47,7 +52,7 @@ public class TeacherService {
     }
 
     public void deleteTeacherById(long id) {
-        logger.info("Start service for deleting teacher by id {}", id);
+        logger.debug("Start service for deleting teacher by id {}", id);
         try {
             teacherJdbcDao.getById(id);
         } catch (DaoException exception) {
@@ -56,16 +61,16 @@ public class TeacherService {
             throw new ServiceException(msg, exception);
         }
         teacherJdbcDao.delete(id);
-        logger.info("Teacher id {} has been deleted", id);
+        logger.debug("Teacher id {} has been deleted", id);
     }
 
     public List<Teacher> getAllTeachers() {
-        logger.info("Start service for getting all teachers");
+        logger.debug("Start service for getting all teachers");
         return teacherJdbcDao.getAll();
     }
 
     public void updateTeacher(Teacher teacher) {
-        logger.info("Start service for updating teacher with id {}", teacher.getId());
+        logger.debug("Start service for updating teacher with id {}", teacher.getId());
         try {
             teacherJdbcDao.getById(teacher.getId());
         } catch (DaoException exception) {

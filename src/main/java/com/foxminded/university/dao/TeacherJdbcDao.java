@@ -38,35 +38,37 @@ public class TeacherJdbcDao implements TeacherDao {
 
     public Teacher getById(Long id) {
         Teacher teacher;
-        logger.info("Getting teacher by id {}", id);
+        logger.debug("Getting teacher by id {}", id);
         try {
             teacher = jdbcTemplate.queryForObject(SQL_FIND_TEACHER, teacherMapper, id);
         } catch (EmptyResultDataAccessException exception) {
             String msg = format("Couldn't find teacher with id '%s'", id);
+            logger.warn(msg);
             throw new DaoException(msg, exception);
         } catch (DataAccessException exception) {
             String msg = format("Unable to get teacher with ID '%s'", id);
+            logger.warn(msg);
             throw new DaoException(msg, exception);
         }
         return teacher;
     }
 
     public List<Teacher> getAll() {
-        logger.info("Getting all teachers");
+        logger.debug("Getting all teachers");
         return jdbcTemplate.query(SQL_GET_ALL_TEACHER, teacherMapper);
     }
 
     public void delete(Long id) {
-        logger.info("Deleting teacher by id {}", id);
+        logger.debug("Deleting teacher by id {}", id);
         jdbcTemplate.update(SQL_DELETE_TEACHER, id);
     }
 
     public void update(Teacher teacher) {
-        logger.info("Updating teacher with id {}", teacher.getId());
+        logger.debug("Updating teacher with id {}", teacher.getId());
         boolean success = jdbcTemplate.update(SQL_UPDATE_TEACHER, teacher.getFirstname(), teacher.getLastname(), teacher.getDateOfBirth(),
                 teacher.getGender(), teacher.getVacation().getId(), teacher.getWorkingHours().getId(), teacher.getId()) > 0;
         if (success) {
-            logger.info("Teacher with id {} has been updated", teacher.getId());
+            logger.debug("Teacher with id {} has been updated", teacher.getId());
         } else {
             String msg = format("Teacher with id %s has not been updated", teacher.getId());
             logger.warn(msg);
@@ -75,15 +77,14 @@ public class TeacherJdbcDao implements TeacherDao {
     }
 
     public void create(Teacher teacher) {
-        logger.info("Creating teacher");
-        try {
-            jdbcTemplate.update(SQL_INSERT_TEACHER, teacher.getFirstname(), teacher.getLastname(), teacher.getDateOfBirth(),
-                    teacher.getGender(), teacher.getVacation().getId(), teacher.getWorkingHours().getId());
-            logger.info("Teacher has been created");
-        } catch (NullPointerException exception) {
+        logger.info("Start creating teacher");
+        if (teacher == null) {
             String msg = "Cannot create teacher, because teacher is null";
             logger.warn(msg);
-            throw new DaoException(msg, exception);
+            throw new DaoException(msg);
         }
+        jdbcTemplate.update(SQL_INSERT_TEACHER, teacher.getFirstname(), teacher.getLastname(), teacher.getDateOfBirth(),
+                teacher.getGender(), teacher.getVacation().getId(), teacher.getWorkingHours().getId());
+        logger.debug("Teacher has been created");
     }
 }

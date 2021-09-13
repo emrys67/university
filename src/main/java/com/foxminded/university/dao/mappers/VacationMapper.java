@@ -29,7 +29,7 @@ public class VacationMapper implements RowMapper<Vacation> {
 
     public Vacation mapRow(ResultSet resultSet, int i) {
         try {
-            logger.info("Start rowMapper with vacation id {}", resultSet.getLong(ID));
+            logger.debug("Start rowMapper with vacation id {}", resultSet.getLong(ID));
             Vacation vacation = new Vacation();
             vacation.setId(resultSet.getLong(ID));
             vacation.setTimePeriod(timePeriodDao.getById(resultSet.getLong(TIME_PERIOD)));

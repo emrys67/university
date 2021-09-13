@@ -24,7 +24,7 @@ public class StudentMapper implements RowMapper<Student> {
 
     public Student mapRow(ResultSet resultSet, int i) {
         try {
-            logger.info("Start rowMapper with student id {}", resultSet.getLong(ID));
+            logger.debug("Start rowMapper with student id {}", resultSet.getLong(ID));
             Student student = new Student();
             student.setId(resultSet.getLong(ID));
             student.setFirstname(resultSet.getString(FIRSTNAME));

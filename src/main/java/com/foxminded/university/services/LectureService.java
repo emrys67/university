@@ -27,10 +27,15 @@ public class LectureService {
     }
 
     public void addLecture(Lecture lecture) {
-        logger.info("Start service for adding lecture");
+        logger.debug("Start service for adding lecture");
+        if (lecture == null) {
+            String msg = "Cannot create lecture, because lecture is null";
+            logger.warn(msg);
+            throw new ServiceException(msg);
+        }
         try {
             lectureJdbcDao.create(lecture);
-            logger.info("Lecture has been added successfully");
+            logger.debug("Lecture has been added successfully");
         } catch (DaoException exception) {
             String msg = "Lecture has not been added";
             logger.warn(msg);
@@ -39,7 +44,7 @@ public class LectureService {
     }
 
     public Lecture getLectureById(long id) {
-        logger.info("Start service for getting lecture by id {}", id);
+        logger.debug("Start service for getting lecture by id {}", id);
         try {
             return lectureJdbcDao.getById(id);
         } catch (DaoException exception) {
@@ -50,7 +55,7 @@ public class LectureService {
     }
 
     public void deleteLectureById(long id) {
-        logger.info("Start service for deleting lecture by id {}", id);
+        logger.debug("Start service for deleting lecture by id {}", id);
         try {
             lectureJdbcDao.getById(id);
         } catch (DaoException exception) {
@@ -59,16 +64,16 @@ public class LectureService {
             throw new ServiceException(msg, exception);
         }
         lectureJdbcDao.delete(id);
-        logger.info("Lecture id {} has been deleted", id);
+        logger.debug("Lecture id {} has been deleted", id);
     }
 
     public List<Lecture> getAllLectures() {
-        logger.info("Start service for getting all lectures");
+        logger.debug("Start service for getting all lectures");
         return lectureJdbcDao.getAll();
     }
 
     public void updateLecture(Lecture lecture) {
-        logger.info("Start service for updating lecture with id {}", lecture.getId());
+        logger.debug("Start service for updating lecture with id {}", lecture.getId());
         try {
             lectureJdbcDao.getById(lecture.getId());
         } catch (DaoException exception) {
@@ -86,6 +91,7 @@ public class LectureService {
     }
 
     public void addGroup(Lecture lecture, Group group) {
+        logger.debug("Start service for adding group to student");
         try {
             lectureJdbcDao.getById(lecture.getId());
         } catch (DaoException exception) {
@@ -104,6 +110,7 @@ public class LectureService {
     }
 
     public List<Group> getGroupsFromLecture(long lectureId) {
+        logger.debug("Start service for getting all groups from the lecture");
         try {
             lectureJdbcDao.getById(lectureId);
         } catch (DaoException exception) {

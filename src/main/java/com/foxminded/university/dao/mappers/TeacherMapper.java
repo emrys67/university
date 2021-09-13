@@ -36,7 +36,7 @@ public class TeacherMapper implements RowMapper<Teacher> {
 
     public Teacher mapRow(ResultSet resultSet, int i) {
         try {
-            logger.info("Start rowMapper with teacher id {}", resultSet.getLong(ID));
+            logger.debug("Start rowMapper with teacher id {}", resultSet.getLong(ID));
             Teacher teacher = new Teacher();
             teacher.setId(resultSet.getLong(ID));
             teacher.setFirstname(resultSet.getString(FIRSTNAME));

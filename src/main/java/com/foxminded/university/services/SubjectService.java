@@ -29,10 +29,15 @@ public class SubjectService {
     }
 
     public void addSubject(Subject subject) {
-        logger.info("Start service for adding subject");
+        logger.debug("Start service for adding subject");
+        if (subject == null) {
+            String msg = "Cannot create subject, because subject is null";
+            logger.warn(msg);
+            throw new ServiceException(msg);
+        }
         try {
             subjectJdbcDao.create(subject);
-            logger.info("Subject has been added successfully");
+            logger.debug("Subject has been added successfully");
         } catch (DaoException exception) {
             String msg = "Subject has not been added";
             logger.warn(msg);
@@ -41,7 +46,7 @@ public class SubjectService {
     }
 
     public Subject getSubjectById(long id) {
-        logger.info("Start service for getting subject by id {}", id);
+        logger.debug("Start service for getting subject by id {}", id);
         try {
             return subjectJdbcDao.getById(id);
         } catch (DaoException exception) {
@@ -52,7 +57,7 @@ public class SubjectService {
     }
 
     public void deleteSubjectById(long id) {
-        logger.info("Start service for deleting subject by id {}", id);
+        logger.debug("Start service for deleting subject by id {}", id);
         try {
             subjectJdbcDao.getById(id);
         } catch (DaoException exception) {
@@ -61,7 +66,7 @@ public class SubjectService {
             throw new ServiceException(msg, exception);
         }
         subjectJdbcDao.delete(id);
-        logger.info("Subject id {} has been deleted", id);
+        logger.debug("Subject id {} has been deleted", id);
     }
 
     public List<Subject> getAllSubjects() {
@@ -70,7 +75,7 @@ public class SubjectService {
     }
 
     public void updateSubject(Subject subject) {
-        logger.info("Start service for updating subject with id {}", subject.getId());
+        logger.debug("Start service for updating subject with id {}", subject.getId());
         try {
             subjectJdbcDao.getById(subject.getId());
         } catch (DaoException exception) {
@@ -88,6 +93,7 @@ public class SubjectService {
     }
 
     public void addTeacher(Teacher teacher, Subject subject) {
+        logger.debug("Start service for adding teacher to subject");
         try {
             teacherJdbcDao.getById(teacher.getId());
         } catch (DaoException exception) {
@@ -106,6 +112,7 @@ public class SubjectService {
     }
 
     public List<Teacher> getTeachersFromSubject(long subjectId) {
+        logger.debug("Start service for getting all teachers from the subject");
         try {
             subjectJdbcDao.getById(subjectId);
         } catch (DaoException exception) {

@@ -44,38 +44,40 @@ public class LectureJdbcDao implements LectureDao {
 
     public Lecture getById(Long id) {
         Lecture lecture;
-        logger.info("Getting lecture by id {}", id);
+        logger.debug("Getting lecture by id {}", id);
         try {
             lecture = jdbcTemplate.queryForObject(SQL_FIND_LECTURE, lectureMapper, id);
         } catch (EmptyResultDataAccessException exception) {
             String msg = format("Couldn't find lecture with id '%s'", id);
+            logger.warn(msg);
             throw new DaoException(msg, exception);
         } catch (DataAccessException exception) {
             String msg = format("Unable to get lecture with ID '%s'", id);
+            logger.warn(msg);
             throw new DaoException(msg, exception);
         }
         return lecture;
     }
 
     public List<Lecture> getAll() {
-        logger.info("Getting all lectures");
+        logger.debug("Getting all lectures");
         return jdbcTemplate.query(SQL_GET_ALL_LECTURE, lectureMapper);
     }
 
     public void delete(Long id) {
-        logger.info("Deleting lecture by id {}", id);
+        logger.debug("Deleting lecture by id {}", id);
         jdbcTemplate.update(SQL_DELETE_LECTURE, id);
     }
 
     public void update(Lecture lecture) {
-        logger.info("Updating lecture with id {}", lecture.getId());
+        logger.debug("Updating lecture with id {}", lecture.getId());
         List<Group> currentGroups = getGroupsFromLecture(lecture.getId());
         lecture.getGroups().stream().filter(group -> !currentGroups.contains(group)).forEach(group -> addGroup(group.getId(), lecture.getId()));
         currentGroups.stream().filter(group -> !lecture.getGroups().contains(group)).forEach(group -> deleteGroup(group.getId(), lecture.getId()));
         boolean success = jdbcTemplate.update(SQL_UPDATE_LECTURE, lecture.getSubject().getId(), lecture.getTeacher().getId(),
                 lecture.getTimePeriod().getId(), lecture.getClassroom().getId(), lecture.getId()) > 0;
         if (success) {
-            logger.info("Lecture with id {} has been updated", lecture.getId());
+            logger.debug("Lecture with id {} has been updated", lecture.getId());
         } else {
             String msg = format("Lecture with id %s has not been updated", lecture.getId());
             logger.warn(msg);
@@ -84,30 +86,29 @@ public class LectureJdbcDao implements LectureDao {
     }
 
     public void create(Lecture lecture) {
-        logger.info("Creating lecture");
-        try {
-            jdbcTemplate.update(SQL_INSERT_LECTURE, lecture.getTeacher().getId(), lecture.getTimePeriod().getId(),
-                    lecture.getClassroom().getId(), lecture.getSubject().getId());
-            logger.info("Lecture has been created");
-        } catch (NullPointerException exception) {
+        logger.debug("Start creating lecture");
+        if (lecture == null) {
             String msg = "Cannot create lecture, because lecture is null";
             logger.warn(msg);
-            throw new DaoException(msg, exception);
+            throw new DaoException(msg);
         }
+        jdbcTemplate.update(SQL_INSERT_LECTURE, lecture.getTeacher().getId(), lecture.getTimePeriod().getId(),
+                lecture.getClassroom().getId(), lecture.getSubject().getId());
+        logger.debug("Lecture has been created");
     }
 
     public void addGroup(long lectureId, long groupId) {
-        logger.info("Adding group with id {} to the lecture with id {}", groupId, lectureId);
+        logger.debug("Adding group with id {} to the lecture with id {}", groupId, lectureId);
         jdbcTemplate.update(SQL_ADD_GROUP, lectureId, groupId);
     }
 
     public void deleteGroup(long lectureId, long groupId) {
-        logger.info("Deleting group with id {} from lecture with id {}", groupId, lectureId);
+        logger.debug("Deleting group with id {} from lecture with id {}", groupId, lectureId);
         jdbcTemplate.update(SQL_DELETE_GROUP, lectureId, groupId);
     }
 
     public List<Group> getGroupsFromLecture(long lectureId) {
-        logger.info("Getting all groups from the lecture with id {}", lectureId);
+        logger.debug("Getting all groups from the lecture with id {}", lectureId);
         return jdbcTemplate.query(SQL_GET_ALL_GROUPS, groupMapper, lectureId);
     }
 }

@@ -38,7 +38,7 @@ public class StudentJdbcDao implements StudentDao {
 
     public Student getById(Long id) {
         Student student;
-        logger.info("Getting student by id {}", id);
+        logger.debug("Getting student by id {}", id);
         try {
             student = jdbcTemplate.queryForObject(SQL_FIND_STUDENT, studentMapper, id);
         } catch (EmptyResultDataAccessException exception) {
@@ -52,21 +52,21 @@ public class StudentJdbcDao implements StudentDao {
     }
 
     public List<Student> getAll() {
-        logger.info("Getting all students");
+        logger.debug("Getting all students");
         return jdbcTemplate.query(SQL_GET_ALL_STUDENT, studentMapper);
     }
 
     public void delete(Long id) {
-        logger.info("Deleting student by id {}", id);
+        logger.debug("Deleting student by id {}", id);
         jdbcTemplate.update(SQL_DELETE_STUDENT, id);
     }
 
     public void update(Student student) {
-        logger.info("Updating student with id {}", student.getId());
+        logger.debug("Updating student with id {}", student.getId());
         boolean success = jdbcTemplate.update(SQL_UPDATE_STUDENT, student.getFirstname(), student.getLastname(), student.getDateOfBirth(),
                 student.getGender(), student.getStudyYear(), student.getId()) > 0;
         if (success) {
-            logger.info("Student with id {} has been updated", student.getId());
+            logger.debug("Student with id {} has been updated", student.getId());
         } else {
             String msg = format("Student with id %s has not been updated", student.getId());
             logger.warn(msg);
@@ -75,15 +75,14 @@ public class StudentJdbcDao implements StudentDao {
     }
 
     public void create(Student student) {
-        logger.info("Creating student");
-        try {
-            jdbcTemplate.update(SQL_INSERT_STUDENT, student.getFirstname(), student.getLastname(), student.getDateOfBirth(),
-                    student.getGender(), student.getStudyYear());
-            logger.info("Student has been created");
-        } catch (NullPointerException exception) {
+        logger.debug("Start creating student");
+        if (student == null) {
             String msg = "Cannot create student, because student is null";
             logger.warn(msg);
-            throw new DaoException(msg, exception);
+            throw new DaoException(msg);
         }
+        jdbcTemplate.update(SQL_INSERT_STUDENT, student.getFirstname(), student.getLastname(), student.getDateOfBirth(),
+                student.getGender(), student.getStudyYear());
+        logger.debug("Student has been created");
     }
 }

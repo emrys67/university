@@ -1,6 +1,5 @@
 package com.foxminded.university.dao.mappers;
 
-import com.foxminded.university.dao.ClassroomJdbcDao;
 import com.foxminded.university.dao.exceptions.MapperException;
 import com.foxminded.university.entities.Classroom;
 import org.slf4j.Logger;
@@ -22,7 +21,7 @@ public class ClassroomMapper implements RowMapper<Classroom> {
 
     public Classroom mapRow(ResultSet resultSet, int i) {
         try {
-            logger.info("Start rowMapper with classroom id {}", resultSet.getLong(ID));
+            logger.debug("Start rowMapper with classroom id {}", resultSet.getLong(ID));
             Classroom classroom = new Classroom();
             classroom.setId(resultSet.getLong(ID));
             classroom.setCapacity(resultSet.getInt(CAPACITY));

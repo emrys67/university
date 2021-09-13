@@ -24,10 +24,15 @@ public class StudentService {
     }
 
     public void addStudent(Student student) {
-        logger.info("Start service for adding student");
+        logger.debug("Start service for adding student");
+        if (student == null) {
+            String msg = "Cannot create student, because student is null";
+            logger.warn(msg);
+            throw new ServiceException(msg);
+        }
         try {
             studentJdbcDao.create(student);
-            logger.info("Student has been added successfully");
+            logger.debug("Student has been added successfully");
         } catch (DaoException exception) {
             String msg = "Student has not been added";
             logger.warn(msg);
@@ -36,7 +41,7 @@ public class StudentService {
     }
 
     public Student getStudentById(long id) {
-        logger.info("Start service for getting student by id {}", id);
+        logger.debug("Start service for getting student by id {}", id);
         try {
             return studentJdbcDao.getById(id);
         } catch (DaoException exception) {
@@ -47,7 +52,7 @@ public class StudentService {
     }
 
     public void deleteStudentById(long id) {
-        logger.info("Start service for deleting student by id {}", id);
+        logger.debug("Start service for deleting student by id {}", id);
         try {
             studentJdbcDao.getById(id);
         } catch (DaoException exception) {
@@ -56,16 +61,16 @@ public class StudentService {
             throw new ServiceException(msg, exception);
         }
         studentJdbcDao.delete(id);
-        logger.info("Student id {} has been deleted", id);
+        logger.debug("Student id {} has been deleted", id);
     }
 
     public List<Student> getAllStudents() {
-        logger.info("Start service for getting all students");
+        logger.debug("Start service for getting all students");
         return studentJdbcDao.getAll();
     }
 
     public void updateStudent(Student student) {
-        logger.info("Start service for updating student with id {}", student.getId());
+        logger.debug("Start service for updating student with id {}", student.getId());
         try {
             studentJdbcDao.getById(student.getId());
         } catch (DaoException exception) {

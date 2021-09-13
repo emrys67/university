@@ -38,35 +38,37 @@ public class TimePeriodJdbcDao implements TimePeriodDao {
 
     public TimePeriod getById(Long id) {
         TimePeriod timePeriod;
-        logger.info("Getting timePeriod by id {}", id);
+        logger.debug("Getting timePeriod by id {}", id);
         try {
             timePeriod = jdbcTemplate.queryForObject(SQL_FIND_TIME_PERIOD, timePeriodMapper, id);
         } catch (EmptyResultDataAccessException exception) {
             String msg = format("Couldn't find timePeriod with id '%s'", id);
+            logger.warn(msg);
             throw new DaoException(msg, exception);
         } catch (DataAccessException exception) {
             String msg = format("Unable to get timePeriod with ID '%s'", id);
+            logger.warn(msg);
             throw new DaoException(msg, exception);
         }
         return timePeriod;
     }
 
     public List<TimePeriod> getAll() {
-        logger.info("Getting all timePeriods");
+        logger.debug("Getting all timePeriods");
         return jdbcTemplate.query(SQL_GET_ALL_TIME_PERIOD, timePeriodMapper);
     }
 
     public void delete(Long id) {
-        logger.info("Deleting timePeriod by id {}", id);
+        logger.debug("Deleting timePeriod by id {}", id);
         jdbcTemplate.update(SQL_DELETE_TIME_PERIOD, id);
     }
 
     public void update(TimePeriod timePeriod) {
-        logger.info("Updating timePeriod with id {}", timePeriod.getId());
+        logger.debug("Updating timePeriod with id {}", timePeriod.getId());
         boolean success = jdbcTemplate.update(SQL_UPDATE_TIME_PERIOD, timePeriod.getStartTime(), timePeriod.getEndTime(), timePeriod.getStartDate(),
                 timePeriod.getEndDate(), timePeriod.getId()) > 0;
         if (success) {
-            logger.info("TimePeriod with id {} has been updated", timePeriod.getId());
+            logger.debug("TimePeriod with id {} has been updated", timePeriod.getId());
         } else {
             String msg = format("TimePeriod with id %s has not been updated", timePeriod.getId());
             logger.warn(msg);
@@ -75,15 +77,14 @@ public class TimePeriodJdbcDao implements TimePeriodDao {
     }
 
     public void create(TimePeriod timePeriod) {
-        logger.info("Creating timePeriod");
-        try {
-            jdbcTemplate.update(SQL_INSERT_TIME_PERIOD, timePeriod.getStartTime(), timePeriod.getEndTime(), timePeriod.getStartDate(),
-                    timePeriod.getEndDate());
-            logger.info("TimePeriod has been created");
-        } catch (NullPointerException exception) {
+        logger.debug("Start creating timePeriod");
+        if (timePeriod == null) {
             String msg = "Cannot create timePeriod, because timePeriod is null";
             logger.warn(msg);
-            throw new DaoException(msg, exception);
+            throw new DaoException(msg);
         }
+        jdbcTemplate.update(SQL_INSERT_TIME_PERIOD, timePeriod.getStartTime(), timePeriod.getEndTime(), timePeriod.getStartDate(),
+                timePeriod.getEndDate());
+        logger.debug("TimePeriod has been created");
     }
 }

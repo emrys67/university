@@ -45,26 +45,28 @@ public class SubjectJdbcDao implements SubjectDao {
 
     public Subject getById(Long id) {
         Subject subject;
-        logger.info("Getting student by id {}", id);
+        logger.debug("Getting student by id {}", id);
         try {
             subject = jdbcTemplate.queryForObject(SQL_FIND_SUBJECT, subjectMapper, id);
         } catch (EmptyResultDataAccessException exception) {
             String msg = format("Couldn't find subject with id '%s'", id);
+            logger.warn(msg);
             throw new DaoException(msg, exception);
         } catch (DataAccessException exception) {
             String msg = format("Unable to get subject with ID '%s'", id);
+            logger.warn(msg);
             throw new DaoException(msg, exception);
         }
         return subject;
     }
 
     public List<Subject> getAll() {
-        logger.info("Getting all subjects");
+        logger.debug("Getting all subjects");
         return jdbcTemplate.query(SQL_GET_ALL_SUBJECT, subjectMapper);
     }
 
     public void delete(Long id) {
-        logger.info("Deleting subject by id {}", id);
+        logger.debug("Deleting subject by id {}", id);
         jdbcTemplate.update(SQL_DELETE_SUBJECT, id);
     }
 
@@ -76,7 +78,7 @@ public class SubjectJdbcDao implements SubjectDao {
         boolean success = jdbcTemplate.update(SQL_UPDATE_SUBJECT, subject.getName(), subject.getDescription(), subject.getSupervisor().getId(),
                 subject.getId()) > 0;
         if (success) {
-            logger.info("Subject with id {} has been updated", subject.getId());
+            logger.debug("Subject with id {} has been updated", subject.getId());
         } else {
             String msg = format("Subject with id %s has not been updated", subject.getId());
             logger.warn(msg);
@@ -85,29 +87,28 @@ public class SubjectJdbcDao implements SubjectDao {
     }
 
     public void create(Subject subject) {
-        logger.info("Creating subject");
-        try {
-            jdbcTemplate.update(SQL_INSERT_SUBJECT, subject.getName(), subject.getDescription(), subject.getSupervisor().getId());
-            logger.info("Subject has been created");
-        } catch (NullPointerException exception) {
+        logger.info("Start creating subject");
+        if (subject == null) {
             String msg = "Cannot create subject, because subject is null";
             logger.warn(msg);
-            throw new DaoException(msg, exception);
+            throw new DaoException(msg);
         }
+        jdbcTemplate.update(SQL_INSERT_SUBJECT, subject.getName(), subject.getDescription(), subject.getSupervisor().getId());
+        logger.debug("Subject has been created");
     }
 
     public void addTeacherToSubject(long teacherId, long subjectId) {
-        logger.info("Adding teacher with id {} to the subject with id {}", teacherId, subjectId);
+        logger.debug("Adding teacher with id {} to the subject with id {}", teacherId, subjectId);
         jdbcTemplate.update(SQL_ADD_TEACHER, teacherId, subjectId);
     }
 
     public void deleteTeacherFromSubject(long teacherId, long subjectId) {
-        logger.info("Deleting teacher with id {} from subject with id {}", teacherId, subjectId);
+        logger.debug("Deleting teacher with id {} from subject with id {}", teacherId, subjectId);
         jdbcTemplate.update(SQL_DELETE_TEACHER, teacherId, subjectId);
     }
 
     public List<Teacher> getTeachersFromSubject(long subjectId) {
-        logger.info("Getting all teachers from the subject");
+        logger.debug("Getting all teachers from the subject");
         return jdbcTemplate.query(SQL_GET_ALL_TEACHERS, teacherMapper, subjectId);
     }
 }

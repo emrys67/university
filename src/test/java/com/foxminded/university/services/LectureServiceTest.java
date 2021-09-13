@@ -33,7 +33,8 @@ class LectureServiceTest {
 
     @Test
     void addLectureDaoWasUsed() {
-        lectureService.addLecture(any());
+        Lecture lecture = lectureJdbcDao.getById((long) 1);
+        lectureService.addLecture(lecture);
         verify(lectureJdbcDaoMock, times(1)).create(any());
     }
 

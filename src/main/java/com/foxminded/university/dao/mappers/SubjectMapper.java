@@ -32,7 +32,7 @@ public class SubjectMapper implements RowMapper<Subject> {
 
     public Subject mapRow(ResultSet resultSet, int i) {
         try {
-            logger.info("Start rowMapper with subject id {}", resultSet.getLong(ID));
+            logger.debug("Start rowMapper with subject id {}", resultSet.getLong(ID));
             Subject subject = new Subject();
             long id = resultSet.getLong(ID);
             subject.setId(id);

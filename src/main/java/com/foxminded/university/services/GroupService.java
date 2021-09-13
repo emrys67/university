@@ -30,11 +30,11 @@ public class GroupService {
 
 
     public void addGroup(String name) {
-        logger.info("Start service for adding group");
+        logger.debug("Start service for adding group");
         try {
             Group group = new Group(name);
             groupJdbcDao.create(group);
-            logger.info("Group has been added successfully");
+            logger.debug("Group has been added successfully");
         } catch (DaoException exception) {
             String msg = "Group has not been added";
             logger.warn(msg);
@@ -43,7 +43,7 @@ public class GroupService {
     }
 
     public Group getGroupById(long id) {
-        logger.info("Start service for getting group by id {}", id);
+        logger.debug("Start service for getting group by id {}", id);
         try {
             return groupJdbcDao.getById(id);
         } catch (DaoException exception) {
@@ -54,7 +54,7 @@ public class GroupService {
     }
 
     public void deleteGroupById(long id) {
-        logger.info("Start service for deleting group by id {}", id);
+        logger.debug("Start service for deleting group by id {}", id);
         try {
             groupJdbcDao.getById(id);
         } catch (DaoException exception) {
@@ -63,16 +63,16 @@ public class GroupService {
             throw new ServiceException(msg, exception);
         }
         groupJdbcDao.delete(id);
-        logger.info("Group id {} has been deleted", id);
+        logger.debug("Group id {} has been deleted", id);
     }
 
     public List<Group> getAllGroups() {
-        logger.info("Start service for getting all groups");
+        logger.debug("Start service for getting all groups");
         return groupJdbcDao.getAll();
     }
 
     public void updateGroup(Group group) {
-        logger.info("Start service for updating group with id {}", group.getId());
+        logger.debug("Start service for updating group with id {}", group.getId());
         try {
             groupJdbcDao.getById(group.getId());
         } catch (DaoException exception) {
@@ -90,6 +90,7 @@ public class GroupService {
     }
 
     public void addStudent(Student student, Group group) {
+        logger.debug("Start service for adding student to group");
         try {
             studentJdbcDao.getById(student.getId());
         } catch (DaoException exception) {
@@ -108,6 +109,7 @@ public class GroupService {
     }
 
     public List<Student> getStudentsFromGroup(long groupId) {
+        logger.debug("Start service for getting all students from group");
         try {
             groupJdbcDao.getById(groupId);
         } catch (DaoException exception) {

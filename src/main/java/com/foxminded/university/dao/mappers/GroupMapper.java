@@ -28,7 +28,7 @@ public class GroupMapper implements RowMapper<Group> {
 
     public Group mapRow(ResultSet resultSet, int i) {
         try {
-            logger.info("Start rowMapper with group id {}", resultSet.getLong(ID));
+            logger.debug("Start rowMapper with group id {}", resultSet.getLong(ID));
             Group group = new Group();
             long id = resultSet.getLong(ID);
             group.setId(id);

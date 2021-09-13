@@ -36,35 +36,37 @@ public class VacationJdbcDao implements VacationDao {
 
     public Vacation getById(Long id) {
         Vacation vacation;
-        logger.info("Getting vacation by id {}", id);
+        logger.debug("Getting vacation by id {}", id);
         try {
             vacation = jdbcTemplate.queryForObject(SQL_FIND_VACATION, vacationMapper, id);
         } catch (EmptyResultDataAccessException exception) {
             String msg = format("Couldn't find vacation with id '%s'", id);
+            logger.warn(msg);
             throw new DaoException(msg, exception);
         } catch (DataAccessException exception) {
             String msg = format("Unable to get vacation with ID '%s'", id);
+            logger.warn(msg);
             throw new DaoException(msg, exception);
         }
         return vacation;
     }
 
     public List<Vacation> getAll() {
-        logger.info("Getting all vacations");
+        logger.debug("Getting all vacations");
         return jdbcTemplate.query(SQL_GET_ALL_VACATION, vacationMapper);
     }
 
     public void delete(Long id) {
-        logger.info("Deleting vacation by id {}", id);
+        logger.debug("Deleting vacation by id {}", id);
         jdbcTemplate.update(SQL_DELETE_VACATION, id);
     }
 
     public void update(Vacation vacation) {
-        logger.info("Updating vacation with id {}", vacation.getId());
+        logger.debug("Updating vacation with id {}", vacation.getId());
         boolean success = jdbcTemplate.update(SQL_UPDATE_VACATION, vacation.getDescription(), vacation.getTimePeriod()
                 .getId(), vacation.getId()) > 0;
         if (success) {
-            logger.info("Vacation with id {} has been updated", vacation.getId());
+            logger.debug("Vacation with id {} has been updated", vacation.getId());
         } else {
             String msg = format("Vacation with id %s has not been updated", vacation.getId());
             logger.warn(msg);
@@ -73,14 +75,13 @@ public class VacationJdbcDao implements VacationDao {
     }
 
     public void create(Vacation vacation) {
-        logger.info("Creating vacation");
-        try {
-            jdbcTemplate.update(SQL_INSERT_VACATION, vacation.getDescription(), vacation.getTimePeriod().getId());
-            logger.info("Vacation has been created");
-        } catch (NullPointerException exception) {
+        logger.debug("Start creating vacation");
+        if (vacation == null) {
             String msg = "Cannot create vacation, because vacation is null";
             logger.warn(msg);
-            throw new DaoException(msg, exception);
+            throw new DaoException(msg);
         }
+        jdbcTemplate.update(SQL_INSERT_VACATION, vacation.getDescription(), vacation.getTimePeriod().getId());
+        logger.debug("Vacation has been created");
     }
 }

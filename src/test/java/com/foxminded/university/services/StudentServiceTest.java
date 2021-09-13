@@ -29,7 +29,8 @@ class StudentServiceTest {
 
     @Test
     void addStudentDaoWasUsed() {
-        studentService.addStudent(any());
+        Student student = studentJdbcDao.getById((long) 1);
+        studentService.addStudent(student);
         verify(studentJdbcDaoMock, times(1)).create(any());
     }
 

@@ -41,7 +41,7 @@ public class LectureMapper implements RowMapper<Lecture> {
 
     public Lecture mapRow(ResultSet resultSet, int i) {
         try {
-            logger.info("Start rowMapper with lecture id {}", resultSet.getLong(ID));
+            logger.debug("Start rowMapper with lecture id {}", resultSet.getLong(ID));
             long id = resultSet.getLong(ID);
             return new Lecture().setId(id).setClassroom(classroomDao.getById(resultSet.getLong(CLASSROOM)))
                     .setSubject(subjectDao.getById(resultSet.getLong(SUBJECT)))

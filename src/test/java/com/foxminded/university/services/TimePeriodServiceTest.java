@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
+import java.sql.Time;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -29,7 +31,8 @@ class TimePeriodServiceTest {
 
     @Test
     void addTimePeriodDaoWasUsed() {
-        timePeriodService.addTimePeriod(any());
+        TimePeriod timePeriod = timePeriodJdbcDao.getById((long) 1);
+        timePeriodService.addTimePeriod(timePeriod);
         verify(timePeriodJdbcDaoMock, times(1)).create(any());
     }
 

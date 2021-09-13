@@ -66,7 +66,7 @@ public class ClassroomJdbcDaoTest {
 
     @Test
     void createWithNullObject() {
-        Assertions.assertThrows(NullPointerException.class, () -> {
+        Assertions.assertThrows(DaoException.class, () -> {
             classroomJdbcDao.create(null);
         });
     }

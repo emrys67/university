@@ -36,26 +36,28 @@ public class ClassroomJdbcDao implements ClassroomDao {
 
     public Classroom getById(Long id) {
         Classroom classroom;
-        logger.info("Getting classroom by id {}", id);
+        logger.debug("Getting classroom by id {}", id);
         try {
             classroom = jdbcTemplate.queryForObject(SQL_FIND_CLASSROOM, classroomMapper, id);
         } catch (EmptyResultDataAccessException exception) {
             String msg = format("Couldn't find student with id '%s'", id);
+            logger.warn(msg);
             throw new DaoException(msg, exception);
         } catch (DataAccessException exception) {
             String msg = format("Unable to get Student with ID '%s'", id);
+            logger.warn(msg);
             throw new DaoException(msg, exception);
         }
         return classroom;
     }
 
     public List<Classroom> getAll() {
-        logger.info("Getting all classrooms");
+        logger.debug("Getting all classrooms");
         return jdbcTemplate.query(SQL_GET_ALL_CLASSROOM, classroomMapper);
     }
 
     public void delete(Long id) {
-        logger.info("Deleting classroom with id {}", id);
+        logger.debug("Deleting classroom with id {}", id);
         jdbcTemplate.update(SQL_DELETE_CLASSROOM, id);
     }
 
@@ -63,7 +65,7 @@ public class ClassroomJdbcDao implements ClassroomDao {
         logger.info("Updating classroom with id {}", classroom.getId());
         boolean success = jdbcTemplate.update(SQL_UPDATE_CLASSROOM, classroom.getCapacity(), classroom.getId()) > 0;
         if (success) {
-            logger.info("Classroom with id {} has been updated", classroom.getId());
+            logger.debug("Classroom with id {} has been updated", classroom.getId());
         } else {
             String msg = format("Classroom with id %s has not been updated", classroom.getId());
             logger.warn(msg);
@@ -72,14 +74,13 @@ public class ClassroomJdbcDao implements ClassroomDao {
     }
 
     public void create(Classroom classroom) {
-        logger.info("Creating classroom with id {}", classroom.getId());
-        try {
-            logger.info("Classroom has been created");
-            jdbcTemplate.update(SQL_INSERT_CLASSROOM, classroom.getCapacity());
-        } catch (NullPointerException exception) {
+        logger.debug("Start creating classroom");
+        if (classroom == null) {
             String msg = "Cannot create classroom, because classroom is null";
             logger.warn(msg);
-            throw new DaoException(msg, exception);
+            throw new DaoException(msg);
         }
+        logger.debug("Classroom has been created");
+        jdbcTemplate.update(SQL_INSERT_CLASSROOM, classroom.getCapacity());
     }
 }

@@ -32,7 +32,8 @@ class VacationServiceTest {
 
     @Test
     void addVacationDaoWasUsed() {
-        vacationService.addVacation(any());
+        Vacation vacation = vacationJdbcDao.getById((long) 1);
+        vacationService.addVacation(vacation);
         verify(vacationJdbcDaoMock, times(1)).create(any());
     }
 

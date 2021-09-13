@@ -2,7 +2,10 @@ package com.foxminded.university.services;
 
 import com.foxminded.university.config.TestConfig;
 import com.foxminded.university.dao.ClassroomJdbcDao;
+import com.foxminded.university.dao.exceptions.DaoException;
+import com.foxminded.university.dao.exceptions.ServiceException;
 import com.foxminded.university.entities.Classroom;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -30,8 +33,16 @@ class ClassroomServiceTest {
     @Test
     void addClassroomDaoWasUsed() {
         doNothing().when(classroomJdbcDaoMock).create(any());
-        classroomService.addClassroom(any());
+        Classroom classroom = classroomJdbcDao.getById((long) 1);
+        classroomService.addClassroom(classroom);
         verify(classroomJdbcDaoMock, times(1)).create(any());
+    }
+
+    @Test
+    void addClassroomDaoException() {
+        Assertions.assertThrows(ServiceException.class, () -> {
+           classroomService.addClassroom(null);
+        });
     }
 
     @Test
