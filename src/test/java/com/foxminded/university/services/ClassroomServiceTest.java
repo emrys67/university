@@ -2,11 +2,16 @@ package com.foxminded.university.services;
 
 import com.foxminded.university.config.TestConfig;
 import com.foxminded.university.dao.ClassroomJdbcDao;
+import com.foxminded.university.dao.exceptions.DaoException;
+import com.foxminded.university.dao.exceptions.ServiceException;
+import com.foxminded.university.entities.Classroom;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
@@ -19,42 +24,53 @@ import static org.mockito.Mockito.*;
 @SpringJUnitConfig(TestConfig.class)
 class ClassroomServiceTest {
     @Mock
+    private ClassroomJdbcDao classroomJdbcDaoMock;
+    @Autowired
     private ClassroomJdbcDao classroomJdbcDao;
     @InjectMocks
     private ClassroomService classroomService;
 
     @Test
     void addClassroomDaoWasUsed() {
-        doNothing().when(classroomJdbcDao).create(any());
-        classroomService.addClassroom(any());
-        verify(classroomJdbcDao, times(1)).create(any());
+        doNothing().when(classroomJdbcDaoMock).create(any());
+        Classroom classroom = classroomJdbcDao.getById((long) 1);
+        classroomService.addClassroom(classroom);
+        verify(classroomJdbcDaoMock, times(1)).create(any());
+    }
+
+    @Test
+    void addClassroomDaoException() {
+        Assertions.assertThrows(ServiceException.class, () -> {
+           classroomService.addClassroom(null);
+        });
     }
 
     @Test
     void getClassroomByIdDaoWasUsed() {
-        when(classroomJdbcDao.getById(any())).thenReturn(any());
+        when(classroomJdbcDaoMock.getById(any())).thenReturn(any());
         classroomService.getClassroomById(1);
-        verify(classroomJdbcDao, times(1)).getById(any());
+        verify(classroomJdbcDaoMock, times(1)).getById(any());
     }
 
     @Test
     void deleteClassroomByIdDaoWasUsed() {
-        doNothing().when(classroomJdbcDao).delete(any());
+        doNothing().when(classroomJdbcDaoMock).delete((long) 1);
         classroomService.deleteClassroomById(1);
-        verify(classroomJdbcDao, times(1)).delete(any());
+        verify(classroomJdbcDaoMock, times(1)).delete(any());
     }
 
     @Test
     void getAllClassroomsDaoWasUsed() {
-        when(classroomJdbcDao.getAll()).thenReturn(new ArrayList<>());
+        when(classroomJdbcDaoMock.getAll()).thenReturn(new ArrayList<>());
         classroomService.getAllClassrooms();
-        verify(classroomJdbcDao, times(1)).getAll();
+        verify(classroomJdbcDaoMock, times(1)).getAll();
     }
 
     @Test
     void updateClassroomDaoWasUsed() {
-        doNothing().when(classroomJdbcDao).update(any());
-        classroomService.updateClassroom(any());
-        verify(classroomJdbcDao, times(1)).update(any());
+        Classroom classroom = classroomJdbcDao.getById((long) 1);
+        doNothing().when(classroomJdbcDaoMock).update(any());
+        classroomService.updateClassroom(classroom);
+        verify(classroomJdbcDaoMock, times(1)).update(any());
     }
 }

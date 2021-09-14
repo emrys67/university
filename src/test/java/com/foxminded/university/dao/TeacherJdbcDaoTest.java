@@ -1,6 +1,7 @@
 package com.foxminded.university.dao;
 
 import com.foxminded.university.config.TestConfig;
+import com.foxminded.university.dao.exceptions.DaoException;
 import com.foxminded.university.entities.Teacher;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -30,7 +31,7 @@ public class TeacherJdbcDaoTest {
 
     @Test
     void getByWrongId() {
-        Assertions.assertThrows(EmptyResultDataAccessException.class, () -> {
+        Assertions.assertThrows(DaoException.class, () -> {
             teacherJdbcDao.getById((long) 20);
         });
     }
@@ -43,7 +44,7 @@ public class TeacherJdbcDaoTest {
 
     @Test
     void delete() {
-        Assertions.assertThrows(EmptyResultDataAccessException.class, () -> {
+        Assertions.assertThrows(DaoException.class, () -> {
             teacherJdbcDao.delete((long) 1);
             teacherJdbcDao.getById((long) 1);
         });
@@ -66,7 +67,7 @@ public class TeacherJdbcDaoTest {
 
     @Test
     void createWithNullObject() {
-        Assertions.assertThrows(NullPointerException.class, () -> {
+        Assertions.assertThrows(DaoException.class, () -> {
             teacherJdbcDao.create(null);
         });
     }

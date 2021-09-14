@@ -1,5 +1,8 @@
 package com.foxminded.university.config;
 
+import com.foxminded.university.dao.mappers.ClassroomMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
@@ -19,21 +22,23 @@ import java.sql.SQLException;
 @PropertySource("classpath:database.properties")
 @ComponentScan("com.foxminded.university")
 public class SpringConfig {
-    @Autowired
-    private Environment environment;
+    private static final Logger logger = LoggerFactory.getLogger(SpringConfig.class.getName());
     private final static String URL = "url";
     private final static String USER = "dbuser";
     private final static String DRIVER = "driver";
     private final static String PASSWORD = "dbpassword";
     private final static String SCHEMA = "schema";
     private final static String POSTGRES_DATASOURCE = "postgresDataSource";
+    private final static String LOG_MESSEGE_DATASOURSE = "DataSource configuration has been loaded";
+    @Autowired
+    private Environment environment;
 
     @Bean
     public JdbcTemplate getJdbcTemplate(@Qualifier(POSTGRES_DATASOURCE) DataSource dataSource) {
         return new JdbcTemplate(dataSource);
     }
 
-    @Profile("main")
+    @Profile("!test")
     @Bean
     public DataSource postgresDataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -42,6 +47,7 @@ public class SpringConfig {
         dataSource.setUsername(environment.getProperty(USER));
         dataSource.setPassword(environment.getProperty(PASSWORD));
         prepareDatabase(dataSource);
+        logger.info(LOG_MESSEGE_DATASOURSE);
         return dataSource;
     }
 

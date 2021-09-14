@@ -1,0 +1,37 @@
+<configuration>
+    <property name="HOME_LOG" value="logs/app.log"/>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>
+                %d{ISO8601} [%-5p][%-16.16t][%32.32c] - %m%n
+            </Pattern>
+        </layout>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logFile.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+        <fileNamePattern>logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
+        <maxHistory>1</maxHistory>
+        <totalSizeCap>300MB</totalSizeCap>
+        </rollingPolicy>
+        <append>true</append>
+        <encoder>
+            <pattern>%d{ISO8601} [%-5p][%-16.16t][%32.32c] - %m%n</pattern>
+        </encoder>
+    </appender>
+
+
+    <root level="info">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE" />
+    </root>
+
+    <logger name="com.foxminded.university" level="debug">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+    </logger>
+
+
+</configuration>
