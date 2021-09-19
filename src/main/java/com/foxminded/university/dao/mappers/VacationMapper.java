@@ -1,6 +1,5 @@
 package com.foxminded.university.dao.mappers;
 
-import com.foxminded.university.dao.ClassroomJdbcDao;
 import com.foxminded.university.dao.exceptions.MapperException;
 import com.foxminded.university.dao.interfaces.TimePeriodDao;
 import com.foxminded.university.entities.Vacation;
@@ -16,10 +15,10 @@ import java.sql.SQLException;
 @Component
 public class VacationMapper implements RowMapper<Vacation> {
     private static final Logger logger = LoggerFactory.getLogger(VacationMapper.class.getName());
-    private final static String ID = "id";
-    private final static String TIME_PERIOD = "time_period_id";
-    private final static String DESCRIPTION = "description";
-    private final static String MAPPER_EXCEPTION = "Exception has occurred during mapRowing Vacation";
+    private static final String ID = "id";
+    private static final String TIME_PERIOD = "time_period_id";
+    private static final String DESCRIPTION = "description";
+    private static final String MAPPER_EXCEPTION = "Exception has occurred during mapRowing Vacation";
     private TimePeriodDao timePeriodDao;
 
     @Autowired

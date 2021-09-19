@@ -1,6 +1,5 @@
 package com.foxminded.university.dao.mappers;
 
-import com.foxminded.university.dao.ClassroomJdbcDao;
 import com.foxminded.university.dao.GroupJdbcDao;
 import com.foxminded.university.dao.exceptions.MapperException;
 import com.foxminded.university.entities.Group;
@@ -16,9 +15,9 @@ import java.sql.SQLException;
 @Component
 public class GroupMapper implements RowMapper<Group> {
     private static final Logger logger = LoggerFactory.getLogger(GroupMapper.class.getName());
-    private final static String ID = "id";
-    private final static String NAME = "name";
-    private final static String MAPPER_EXCEPTION = "Exception has occurred during mapRowing Group";
+    private static final String ID = "id";
+    private static final String NAME = "name";
+    private static final String MAPPER_EXCEPTION = "Exception has occurred during mapRowing Group";
     private GroupJdbcDao groupJdbcDao;
 
     @Autowired

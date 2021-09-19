@@ -1,6 +1,5 @@
 package com.foxminded.university.dao.mappers;
 
-import com.foxminded.university.dao.ClassroomJdbcDao;
 import com.foxminded.university.dao.exceptions.MapperException;
 import com.foxminded.university.entities.Student;
 import org.slf4j.Logger;
@@ -14,13 +13,13 @@ import java.sql.SQLException;
 @Component
 public class StudentMapper implements RowMapper<Student> {
     private static final Logger logger = LoggerFactory.getLogger(StudentMapper.class.getName());
-    private final static String ID = "id";
-    private final static String FIRSTNAME = "firstname";
-    private final static String LASTNAME = "lastname";
-    private final static String BIRTH_DATE = "date_of_birth";
-    private final static String STUDY_YEAR = "study_year";
-    private final static String GENDER = "gender";
-    private final static String MAPPER_EXCEPTION = "Exception has occurred during mapRowing Student";
+    private static final String ID = "id";
+    private static final String FIRSTNAME = "firstname";
+    private static final String LASTNAME = "lastname";
+    private static final String BIRTH_DATE = "date_of_birth";
+    private static final String STUDY_YEAR = "study_year";
+    private static final String GENDER = "gender";
+    private static final String MAPPER_EXCEPTION = "Exception has occurred during mapRowing Student";
 
     public Student mapRow(ResultSet resultSet, int i) {
         try {
