@@ -10,14 +10,12 @@ import org.springframework.stereotype.Component;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static java.lang.String.format;
-
 @Component
 public class ClassroomMapper implements RowMapper<Classroom> {
     private static final Logger logger = LoggerFactory.getLogger(ClassroomMapper.class.getName());
-    private final static String ID = "id";
-    private final static String CAPACITY = "capacity";
-    private final static String MAPPER_EXCEPTION = "Exception has occurred during mapRowing Student";
+    private static final String ID = "id";
+    private static final String CAPACITY = "capacity";
+    private static final String MAPPER_EXCEPTION = "Exception has occurred during mapRowing Student";
 
     public Classroom mapRow(ResultSet resultSet, int i) {
         try {

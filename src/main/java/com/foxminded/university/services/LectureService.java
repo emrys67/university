@@ -1,9 +1,11 @@
 package com.foxminded.university.services;
 
-import com.foxminded.university.dao.*;
+import com.foxminded.university.dao.GroupJdbcDao;
+import com.foxminded.university.dao.LectureJdbcDao;
 import com.foxminded.university.dao.exceptions.DaoException;
 import com.foxminded.university.dao.exceptions.ServiceException;
-import com.foxminded.university.entities.*;
+import com.foxminded.university.entities.Group;
+import com.foxminded.university.entities.Lecture;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

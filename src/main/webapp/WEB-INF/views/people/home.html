@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layouts :: header">
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+<nav th:replace="layouts :: navbar"></nav>
+<table>
+    <tr>
+        <th>
+            <a class="btn btn-primary" th:href="@{/people/students}"
+               role="button">Students</a>
+        </th>
+        <th>
+            <a class="btn btn-primary" th:href="@{/people/teachers}"
+               role="button">Teachers</a>
+        </th>
+    </tr>
+</table>
+</body>
+</html>

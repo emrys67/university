@@ -1,9 +1,11 @@
 package com.foxminded.university.dao.mappers;
 
-import com.foxminded.university.dao.ClassroomJdbcDao;
 import com.foxminded.university.dao.LectureJdbcDao;
 import com.foxminded.university.dao.exceptions.MapperException;
-import com.foxminded.university.dao.interfaces.*;
+import com.foxminded.university.dao.interfaces.ClassroomDao;
+import com.foxminded.university.dao.interfaces.SubjectDao;
+import com.foxminded.university.dao.interfaces.TeacherDao;
+import com.foxminded.university.dao.interfaces.TimePeriodDao;
 import com.foxminded.university.entities.Lecture;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

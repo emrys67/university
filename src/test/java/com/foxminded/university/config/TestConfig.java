@@ -5,11 +5,13 @@ import org.springframework.context.annotation.*;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import javax.sql.DataSource;
 
 @Configuration
-@ComponentScan("com.foxminded.university")
+@WebAppConfiguration
+@ComponentScan("com.foxminded.university.dao")
 public class TestConfig {
     private final static String TEST_DATA_SOURCE = "testDataSource";
     private final static String SCRIPT_SCHEMA = "classpath:schema.sql";
@@ -20,7 +22,7 @@ public class TestConfig {
     }
 
     @Bean
-//    @Profile("test")
+    @Profile("test")
     DataSource testDataSource() {
         DataSource dataSource = new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2)
                 .addScript(SCRIPT_SCHEMA)

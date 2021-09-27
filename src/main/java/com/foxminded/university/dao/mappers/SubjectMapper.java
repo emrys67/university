@@ -1,6 +1,5 @@
 package com.foxminded.university.dao.mappers;
 
-import com.foxminded.university.dao.ClassroomJdbcDao;
 import com.foxminded.university.dao.SubjectJdbcDao;
 import com.foxminded.university.dao.TeacherJdbcDao;
 import com.foxminded.university.dao.exceptions.MapperException;
@@ -17,10 +16,10 @@ import java.sql.SQLException;
 @Component
 public class SubjectMapper implements RowMapper<Subject> {
     private static final Logger logger = LoggerFactory.getLogger(SubjectMapper.class.getName());
-    private final static String ID = "id";
-    private final static String NAME = "name";
-    private final static String DESCRIPTION = "description";
-    private final static String MAPPER_EXCEPTION = "Exception has occurred during mapRowing Subject";
+    private static final String ID = "id";
+    private static final String NAME = "name";
+    private static final String DESCRIPTION = "description";
+    private static final String MAPPER_EXCEPTION = "Exception has occurred during mapRowing Subject";
     private TeacherJdbcDao teacherJdbcDao;
     private SubjectJdbcDao subjectJdbcDao;
 

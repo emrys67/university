@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layouts :: header">
+    <meta charset="UTF-8">
+    <title>Time Table</title>
+</head>
+<body>
+<nav th:replace="layouts :: navbar"></nav>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Subject</th>
+        <th scope="col">Teacher</th>
+        <th scope="col">Time</th>
+        <th scope="col">Classroom</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="lecture : ${lectures}">
+        <td th:text="${lecture.getId()}"></td>
+        <td>
+            <a class="btn btn-primary" th:href="@{/subjects/{subjectId}(subjectId=${lecture.getSubject().getId()})}"
+               role="button" th:text="${lecture.getSubject().getName()}"></a>
+        </td>
+        <td>
+            <a class="btn btn-primary"
+               th:href="@{/people/teacher/{teacherId}(teacherId=${lecture.getTeacher().getId()})}"
+               role="button"
+               th:text="${lecture.getTeacher().getFirstname()} + ' ' + ${lecture.getTeacher().getLastname()}"></a>
+        </td>
+        <td>
+            <a class="btn btn-primary"
+               th:text="${lecture.getTimePeriod().getStartTime() + ' ' + lecture.getTimePeriod().getEndTime()}"
+               th:href="@{/timeperiod/{timeperiodId}(timeperiodId=${lecture.getTimePeriod().getId()})}"
+               role="button">Time</a>
+        </td>
+        <td>
+            <a class="btn btn-primary"
+               th:href="@{/classroom/{classroomId}(classroomId=${lecture.getClassroom().getId()})}"
+               role="button" th:text="${lecture.getClassroom().getId()}"></a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

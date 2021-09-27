@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layouts :: header">
+    <meta charset="UTF-8">
+    <title>TimePeriod</title>
+</head>
+<body>
+<nav th:replace="layouts :: navbar"></nav>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Start Date</th>
+        <th scope="col">End Date</th>
+        <th scope="col">Start Time</th>
+        <th scope="col">End Time</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:object="${timeperiod}">
+        <td th:text="${timeperiod.getId()}"></td>
+        <td th:text="${timeperiod.getStartDate()}"></td>
+        <td th:text="${timeperiod.getEndDate()}"></td>
+        <td th:text="${timeperiod.getStartTime()}"></td>
+        <td th:text="${timeperiod.getEndTime()}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

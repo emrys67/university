@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layouts :: header">
+    <meta charset="UTF-8">
+    <title>Classroom</title>
+</head>
+<body>
+<nav th:replace="layouts :: navbar"></nav>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Capacity</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:object="${classroom}">
+        <td th:text="${classroom.getId()}"></td>
+        <td th:text="${classroom.getCapacity()}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

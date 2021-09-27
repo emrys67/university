@@ -1,6 +1,5 @@
 package com.foxminded.university.dao.mappers;
 
-import com.foxminded.university.dao.ClassroomJdbcDao;
 import com.foxminded.university.dao.exceptions.MapperException;
 import com.foxminded.university.entities.TimePeriod;
 import org.slf4j.Logger;
@@ -14,12 +13,12 @@ import java.sql.SQLException;
 @Component
 public class TimePeriodMapper implements RowMapper<TimePeriod> {
     private static final Logger logger = LoggerFactory.getLogger(TimePeriodMapper.class.getName());
-    private final static String ID = "id";
-    private final static String START_DATE = "start_date";
-    private final static String END_DATE = "end_date";
-    private final static String START_TIME = "start_time";
-    private final static String END_TIME = "end_time";
-    private final static String MAPPER_EXCEPTION = "Exception has occurred during mapRowing TimePeriod";
+    private static final String ID = "id";
+    private static final String START_DATE = "start_date";
+    private static final String END_DATE = "end_date";
+    private static final String START_TIME = "start_time";
+    private static final String END_TIME = "end_time";
+    private static final String MAPPER_EXCEPTION = "Exception has occurred during mapRowing TimePeriod";
 
     public TimePeriod mapRow(ResultSet resultSet, int i) {
         try {

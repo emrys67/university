@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layouts :: header">
+    <meta charset="UTF-8">
+    <title>Subject</title>
+</head>
+<body>
+<nav th:replace="layouts :: navbar"></nav>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Description</th>
+        <th scope="col">Supervisor</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:object="${subject}">
+        <td th:text="${subject.getId()}"></td>
+        <td th:text="${subject.getName()}"></td>
+        <td th:text="${subject.getDescription()}"></td>
+        <td>
+            <a class="btn btn-primary"
+               th:href="@{/people/teacher/{teacherId}(teacherId=${subject.getSupervisor().getId()})}"
+               role="button">Supervisor</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

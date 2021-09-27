@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layouts :: header">
+    <meta charset="UTF-8">
+    <title>Teacher</title>
+</head>
+<body>
+<nav th:replace="layouts :: navbar"></nav>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Firstname</th>
+        <th scope="col">Lastname</th>
+        <th scope="col">Date of birth</th>
+        <th scope="col">Gender</th>
+        <th scope="col">Vacation</th>
+        <th scope="col">Working hours</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:object="${teacher}">
+        <td th:text="${teacher.getId()}"></td>
+        <td th:text="${teacher.getFirstname()}"></td>
+        <td th:text="${teacher.getLastname()}"></td>
+        <td th:text="${teacher.getDateOfBirth()}"></td>
+        <td th:text="${teacher.getGender()}"></td>
+        <td>
+            <a class="btn btn-primary" th:href="@{/vacation/{vacationId}(vacationId=${teacher.getVacation.getId()})}"
+               role="button">Vacation</a>
+        </td>
+        <td>
+            <a class="btn btn-primary"
+               th:href="@{/timeperiod/{timeperiodId}(timeperiodId=${teacher.getWorkingHours().getId()})}"
+               role="button">Working Hours</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
