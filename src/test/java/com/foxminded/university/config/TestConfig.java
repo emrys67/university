@@ -11,7 +11,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @WebAppConfiguration
-@ComponentScan("com.foxminded.university")
+@ComponentScan("com.foxminded.university.dao")
 public class TestConfig {
     private final static String TEST_DATA_SOURCE = "testDataSource";
     private final static String SCRIPT_SCHEMA = "classpath:schema.sql";

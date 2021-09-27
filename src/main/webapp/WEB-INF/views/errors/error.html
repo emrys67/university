@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layouts :: header">
+    <meta charset="UTF-8">
+    <title>Error</title>
+</head>
+<body>
+<nav th:replace="layouts :: navbar"></nav>
+<div class="d-flex justify-content-center align-items-center" id="main">
+    <h1 class="mr-3 pr-3 align-top border-right inline-block align-content-center">404</h1>
+    <div class="inline-block align-middle">
+        <h2 class="font-weight-normal lead" th:text="${exception}"></h2>
+        <h3 class="font-weight-normal lead" th:text="${message}"></h3>
+    </div>
+</div>
+</body>
+</html>

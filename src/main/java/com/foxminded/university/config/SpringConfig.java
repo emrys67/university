@@ -3,7 +3,6 @@ package com.foxminded.university.config;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
@@ -26,13 +25,12 @@ public class SpringConfig {
     private final static String DRIVER = "driver";
     private final static String PASSWORD = "dbpassword";
     private final static String SCHEMA = "schema";
-    private final static String POSTGRES_DATASOURCE = "postgresDataSource";
     private final static String LOG_MESSEGE_DATASOURSE = "DataSource configuration has been loaded";
     @Autowired
     private Environment environment;
 
     @Bean
-    public JdbcTemplate getJdbcTemplate(@Qualifier(POSTGRES_DATASOURCE) DataSource dataSource) {
+    public JdbcTemplate getJdbcTemplate(DataSource dataSource) {
         return new JdbcTemplate(dataSource);
     }
 
